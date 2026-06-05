@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primarios -->
+    <color name="yellow_primary">#FFD600</color>
+    <color name="yellow_dark">#F9C000</color>
+    <color name="black">#1A1A1A</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- Fondos -->
+    <color name="bg_light">#F5F5F5</color>
+    <color name="bg_card">#FFFFFF</color>
+
+    <!-- Iconos y texto secundario -->
+    <color name="gray_icon">#9E9E9E</color>
+    <color name="gray_hint">#BDBDBD</color>
+    <color name="gray_divider">#E0E0E0</color>
+
+    <!-- GPS / Estados -->
+    <color name="green_gps">#4CAF50</color>
+    <color name="green_verified">#43A047</color>
+    <color name="blue_route">#1976D2</color>
+    <color name="red_emergency">#F44336</color>
+    <color name="red_muted">#EF9A9A</color>
+    <color name="orange_accent">#FF6F00</color>
+    <color name="purple_accent">#7B1FA2</color>
+
+    <!-- Tarjetas de mensajes rápidos (colores suaves) -->
+    <color name="green_light">#E8F5E9</color>
+    <color name="blue_light">#E3F2FD</color>
+    <color name="purple_light">#F3E5F5</color>
+    <color name="orange_light">#FFF3E0</color>
+    <color name="teal_light">#E0F7FA</color>
+    <color name="red_light">#FFEBEE</color>
+
+    <!-- Bottom navigation -->
+    <color name="nav_selected">#FFD600</color>
+    <color name="nav_unselected">#9E9E9E</color>
+
+    <!-- Conductor / info tarjeta -->
+    <color name="star_yellow">#FFC107</color>
+    <color name="plate_bg">#EEEEEE</color>
+
+
+</resources>

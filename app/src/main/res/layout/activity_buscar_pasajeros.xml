@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://tools.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".conductor.BuscarPasajeroActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_mapa">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="200dp"
+            android:background="#FFD600" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="150dp"
+            android:background="#FFD600" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <ProgressBar
+            android:id="@+id/progress_radar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:indeterminateTint="#FFD600"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/tv_estado_busqueda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buscando pasajeros cercanos..."
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#212121"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Mantén la app abierta para recibir alertas"
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <Button
+            android:id="@+id/btn_cancelar_busqueda"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="DETENER BÚSQUEDA"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:backgroundTint="#F44336"
+            app:cornerRadius="12dp" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

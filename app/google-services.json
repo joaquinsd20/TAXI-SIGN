@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "108234563969",
+    "project_id": "taxisign-12fbd",
+    "storage_bucket": "taxisign-12fbd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108234563969:android:dc9d2ad1b29845913cc880",
+        "android_client_info": {
+          "package_name": "com.example.taxisign"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcU8L2srTm8UddrsDhDZEDSsxBgpGYUvg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

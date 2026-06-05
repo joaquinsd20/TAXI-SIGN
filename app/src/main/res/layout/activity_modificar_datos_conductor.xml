@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_taxi_neon"
+    tools:context=".conductor.ModificarDatosConductor">
+
+    <LinearLayout
+        android:id="@+id/toolbarEditar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_cancelar_edicion"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:tint="#FFD600"
+            android:contentDescription="Cancelar edición y regresar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Editar Perfil"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginStart="16dp"
+            android:textColor="#FFFFFF"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/toolbarEditar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="32dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_foto_perfil"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    app:cardCornerRadius="55dp"
+                    app:cardElevation="4dp">
+
+                    <ImageView
+                        android:id="@+id/img_editar_conductor"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_person"
+                        android:background="#151B31"
+                        app:tint="#FFD600" />
+                </androidx.cardview.widget.CardView>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_cambiar_foto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/card_foto_perfil"
+                    android:layout_alignEnd="@id/card_foto_perfil"
+                    app:fabSize="mini"
+                    android:src="@android:drawable/ic_menu_camera"
+                    app:backgroundTint="#FFD600"
+                    app:tint="#000000"
+                    android:contentDescription="Cambiar foto de perfil" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Datos Personales"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textColor="#B8C1D9"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#151B31"
+                app:cardCornerRadius="26dp"
+                app:cardElevation="6dp"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre Completo"
+                        android:textColor="#B8C1D9"
+                        android:textSize="12sp"/>
+
+                    <EditText
+                        android:id="@+id/et_editar_nombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="48dp"
+                        android:hint="Juan Pérez"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#5A648C"
+                        android:backgroundTint="#FFD600"
+                        android:inputType="textPersonName"
+                        android:textSize="15sp"
+                        android:layout_marginBottom="12dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Número Telefónico"
+                        android:textColor="#B8C1D9"
+                        android:textSize="12sp"/>
+
+                    <EditText
+                        android:id="@+id/et_editar_telefono"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="48dp"
+                        android:hint="987654321"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#5A648C"
+                        android:backgroundTint="#FFD600"
+                        android:inputType="phone"
+                        android:textSize="15sp"
+                        android:layout_marginBottom="12dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Correo Electrónico"
+                        android:textColor="#B8C1D9"
+                        android:textSize="12sp"/>
+
+                    <EditText
+                        android:id="@+id/et_editar_correo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="48dp"
+                        android:hint="conductor@taxisign.com"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#5A648C"
+                        android:backgroundTint="#FFD600"
+                        android:inputType="textEmailAddress"
+                        android:textSize="17sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seguridad y Contraseña"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textColor="#B8C1D9"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#151B31"
+                app:cardCornerRadius="26dp"
+                app:cardElevation="6dp"
+                android:layout_marginBottom="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contraseña Actual"
+                        android:textColor="#B8C1D9"
+                        android:textSize="12sp"/>
+
+                    <EditText
+                        android:id="@+id/et_pass_actual"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="48dp"
+                        android:hint="••••••••"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#5A648C"
+                        android:backgroundTint="#FFD600"
+                        android:inputType="textPassword"
+                        android:textSize="15sp"
+                        android:layout_marginBottom="12dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nueva Contraseña (Dejar en blanco si no deseas cambiarla)"
+                        android:textColor="#B8C1D9"
+                        android:textSize="11sp"/>
+
+                    <EditText
+                        android:id="@+id/et_pass_nueva"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="48dp"
+                        android:hint="Nueva contraseña"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#5A648C"
+                        android:backgroundTint="#FFD600"
+                        android:inputType="textPassword"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btn_guardar_datos_personales"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="GUARDAR CAMBIOS"
+                android:backgroundTint="#FFD600"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                app:cornerRadius="15dp"
+                android:layout_marginBottom="8dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#020617"
+    tools:context=".pasajero.CalificarConductorActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="22dp">
+
+        <!-- HEADER -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/bg_borde"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="18dp">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@android:color/transparent"
+                android:padding="10dp"
+                android:rotation="180"
+                android:src="@drawable/ic_arrow_right"
+                app:tint="#FFD600"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="Calificar conductor"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <!-- CARD -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_borde"
+            android:elevation="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="28dp">
+
+            <!-- FOTO -->
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/bg_amarillo_circular"
+                android:padding="20dp"
+                android:src="@drawable/ic_person"
+                app:tint="#020617"/>
+
+            <!-- NOMBRE -->
+
+            <TextView
+                android:id="@+id/txt_nombre_conductor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Carlos Mendoza"
+                android:textColor="#FFFFFF"
+                android:textSize="28sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="¿Cómo fue tu viaje?"
+                android:textColor="#AAB1CB"
+                android:textSize="16sp"/>
+
+            <!-- ESTRELLAS -->
+
+            <LinearLayout
+                android:id="@+id/layout_estrellas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/star1"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/ic_star"
+                    app:tint="#FFD600"/>
+
+                <ImageView
+                    android:id="@+id/star2"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/ic_star"
+                    app:tint="#FFD600"/>
+
+                <ImageView
+                    android:id="@+id/star3"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/ic_star"
+                    app:tint="#FFD600"/>
+
+                <ImageView
+                    android:id="@+id/star4"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/ic_star"
+                    app:tint="#FFD600"/>
+
+                <ImageView
+                    android:id="@+id/star5"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/ic_star"
+                    app:tint="#FFD600"/>
+
+            </LinearLayout>
+
+            <!-- COMENTARIO -->
+
+            <EditText
+                android:id="@+id/edt_comentario"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/bg_borde"
+                android:gravity="top"
+                android:hint="Escribe un comentario..."
+                android:padding="16dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAB1CB"
+                android:textSize="16sp"/>
+
+            <!-- BOTON -->
+
+            <LinearLayout
+                android:id="@+id/btn_enviar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/bg_button_yellow"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ENVIAR CALIFICACIÓN"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

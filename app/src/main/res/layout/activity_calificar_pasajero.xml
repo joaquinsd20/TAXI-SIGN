@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/bg_taxi_neon"
+    android:padding="30dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¡Viaje Terminado!"
+        android:textColor="#FFD600"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Cómo calificarías al pasajero?"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:layout_marginBottom="30dp"
+        android:textAlignment="center"/>
+
+    <RatingBar
+        android:id="@+id/ratingPasajero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1.0"
+        android:progressTint="#FFD600"
+        android:secondaryProgressTint="#FFD600"
+        android:layout_marginBottom="40dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#151B31"
+        app:cardCornerRadius="20dp"
+        android:layout_marginBottom="30dp">
+
+        <EditText
+            android:id="@+id/etComentariosPasajero"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:hint="Escribe un comentario (opcional)..."
+            android:textColorHint="#5A648C"
+            android:textColor="#FFFFFF"
+            android:background="@android:color/transparent"
+            android:padding="15dp"
+            android:gravity="top"
+            android:textSize="14sp"/>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/btnEnviarCalificacion"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:text="FINALIZAR Y ENVIAR"
+        android:backgroundTint="#FFD600"
+        android:textColor="#151B31"
+        android:textStyle="bold"
+        app:cornerRadius="15dp"/>
+
+</LinearLayout>
