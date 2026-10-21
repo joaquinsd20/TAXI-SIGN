@@ -269,6 +269,15 @@
                     android:textSize="15sp"
                     android:textStyle="bold"/>
 
+                <TextView
+                    android:id="@+id/tv_nombre_conductor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Conductor"
+                    android:textColor="#FFD600"
+                    android:textSize="13sp"/>
+
             </LinearLayout>
 
             <!-- Calificar pasajero -->

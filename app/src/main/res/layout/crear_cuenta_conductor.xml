@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#020617">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:id="@+id/header_registro"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnVolverConductor"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="#FFD600"
+            android:contentDescription="Volver"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Registro de conductor"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <!-- SCROLL CON EL FORMULARIO -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/header_registro"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="32dp">
+
+            <!-- ÍCONO CENTRAL -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginBottom="24dp">
+
+                <FrameLayout
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:background="@drawable/bg_icon_blue">
+
+                    <ImageView
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_taxi"
+                        app:tint="#FFD600"/>
+
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="Crea tu cuenta de conductor"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Completa tus datos para empezar"
+                    android:textColor="#AAB1CB"
+                    android:textSize="13sp"/>
+
+            </LinearLayout>
+
+            <!-- CARD DEL FORMULARIO -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_borde"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- NOMBRE -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:hint="Nombre completo"
+                    app:boxBackgroundColor="#0B1220"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeColor="#FFD600"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#AAB1CB"
+                    app:startIconDrawable="@drawable/ic_person"
+                    app:startIconTint="#AAB1CB">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNombreConductor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:textColor="#FFFFFF"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- DNI -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:hint="DNI"
+                    app:boxBackgroundColor="#0B1220"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeColor="#FFD600"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#AAB1CB"
+                    app:startIconDrawable="@drawable/ic_lock"
+                    app:startIconTint="#AAB1CB"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="8">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDniConductor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLength="8"
+                        android:textColor="#FFFFFF"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- PLACA -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:hint="Placa del vehículo"
+                    app:boxBackgroundColor="#0B1220"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeColor="#FFD600"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#AAB1CB"
+                    app:startIconDrawable="@drawable/ic_taxi"
+                    app:startIconTint="#AAB1CB">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPlacaConductor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapCharacters"
+                        android:hint="ABC-123"
+                        android:textColor="#FFFFFF"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:hint="Modelo del vehículo"
+                        app:boxBackgroundColor="#0B1220"
+                        app:boxStrokeColor="#FFD600">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etModeloVehiculo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#FFFFFF"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:hint="Color del vehículo"
+                        app:boxBackgroundColor="#0B1220"
+                        app:boxStrokeColor="#FFD600">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etColorVehiculo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#FFFFFF"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- SEPARADOR -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#1F2A44"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="18dp"/>
+
+                <!-- EMAIL -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:hint="Correo electrónico"
+                    app:boxBackgroundColor="#0B1220"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeColor="#FFD600"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#AAB1CB"
+                    app:startIconDrawable="@drawable/ic_email"
+                    app:startIconTint="#AAB1CB">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEmailConductor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:textColor="#FFFFFF"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- CONTRASEÑA -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Contraseña"
+                    app:boxBackgroundColor="#0B1220"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeColor="#FFD600"
+                    app:boxStrokeWidth="1dp"
+                    app:hintTextColor="#AAB1CB"
+                    app:startIconDrawable="@drawable/ic_lock"
+                    app:startIconTint="#AAB1CB"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="#AAB1CB">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPassConductor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:textColor="#FFFFFF"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <!-- BOTÓN SIGUIENTE -->
+            <Button
+                android:id="@+id/btnSiguienteDocumentos"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="24dp"
+                android:text="SIGUIENTE: SUBIR DOCUMENTOS"
+                android:textColor="#151B31"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:backgroundTint="#FFD600"
+                app:cornerRadius="16dp"/>
+
+            <!-- NOTA -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:text="Al continuar aceptas los Términos y Condiciones de TaxiSign"
+                android:textColor="#666F8F"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

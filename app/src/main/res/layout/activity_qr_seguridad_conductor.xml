@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="28dp"
+    android:background="#0F1428">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🔒 Validar al pasajero"
+        android:textColor="#FFD600"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Escanea el QR que muestra el pasajero para iniciar el viaje de forma segura."
+        android:textColor="#C7CEE3"
+        android:textSize="15sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_escanear"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_marginTop="34dp"
+        android:text="📷 Escanear QR"
+        android:textColor="#1A1A2E"
+        android:textStyle="bold"
+        app:backgroundTint="#FFD600"
+        app:cornerRadius="14dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:text="¿No puedes escanear?"
+        android:textColor="#9CA4C3"
+        android:textSize="13sp" />
+
+    <EditText
+        android:id="@+id/et_codigo_manual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Ingresa el código de 6 dígitos"
+        android:inputType="number"
+        android:maxLength="6"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#7A8199"
+        android:gravity="center"
+        android:textSize="20sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_validar_manual"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:text="Validar código"
+        android:textColor="#FFD600"
+        app:backgroundTint="@android:color/transparent"
+        app:strokeColor="#FFD600"
+        app:strokeWidth="1dp"
+        app:cornerRadius="14dp" />
+
+</LinearLayout>

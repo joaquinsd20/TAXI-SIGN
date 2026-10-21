@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_taxi_neon"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="40dp">
+
+        <!-- Logo -->
+        <ImageView
+            android:id="@+id/imgLogoGooglePasajero"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="40dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo_taxi"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <!-- Saludo -->
+        <TextView
+            android:id="@+id/tvSaludoGooglePasajero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="¡Hola!"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgLogoGooglePasajero"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Solo falta un paso para empezar a viajar"
+            android:textColor="#B8C1D9"
+            android:textSize="14sp"
+            android:id="@+id/tvSubtituloGooglePasajero"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSaludoGooglePasajero"/>
+
+        <!-- Card de formulario -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardCompletarPasajeroGoogle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="#151B31"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtituloGooglePasajero">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Celular -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    app:boxBackgroundColor="#0B1020"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="#2A3352"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:hintTextColor="#FFD600"
+                    app:prefixText="+51 "
+                    app:prefixTextColor="#FFD600"
+                    app:startIconDrawable="@drawable/ic_phone"
+                    app:startIconTint="#FFD600">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etTelefonoGooglePasajero"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:hint="Número de celular (9 dígitos)"
+                        android:inputType="phone"
+                        android:maxLength="9"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#7E8695"
+                        android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Sección de condición auditiva -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Tienes alguna condición auditiva o del habla?"
+                    android:textColor="#B8C1D9"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="2dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Esto nos ayuda a conectarte con conductores preparados para ti"
+                    android:textColor="#7E8695"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="12dp"/>
+
+                <RadioGroup
+                    android:id="@+id/rgAccesibilidadGooglePasajero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="22dp">
+
+                    <RadioButton
+                        android:id="@+id/rbNormalGoogle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Usuario normal (sin condición auditiva/habla)"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FFD600"
+                        android:textSize="14sp"
+                        android:checked="true"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"/>
+
+                    <RadioButton
+                        android:id="@+id/rbSordoGoogle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sordo (no escucho)"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:buttonTint="#FFD600"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"/>
+
+                    <RadioButton
+                        android:id="@+id/rbMudoGoogle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mudo (no hablo)"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:buttonTint="#FFD600"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"/>
+
+                    <RadioButton
+                        android:id="@+id/rbSordomudoGoogle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sordomudo (no escucho ni hablo)"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:buttonTint="#FFD600"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"/>
+                </RadioGroup>
+
+                <!-- Botón continuar -->
+                <Button
+                    android:id="@+id/btnContinuarGooglePasajero"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:background="@drawable/bg_button_yellow"
+                    android:text="CONTINUAR"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

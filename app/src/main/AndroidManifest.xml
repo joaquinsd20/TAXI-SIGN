@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.taxisign">
+    package="com.taxisign.pro">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <!-- INTERNET -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- GPS -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- GPS en segundo plano (Android 10+) -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <!-- Vibración -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -20,50 +35,90 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
+        <!-- GOOGLE MAPS API -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBXZDPoloKmzL9k0tDLBjfQ37hZ2kh87JE" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.taxisign.pro.MainActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".conductor.MapaConductorActivity" android:exported="false"/>
-        <activity android:name=".pasajero.MapaPasajeroActivity" android:exported="false"/>
-        <activity android:name=".conductor.BuscarPasajero" android:exported="false"/>
-        <activity android:name=".conductor.SolicitudDetalleConductor" android:exported="false"/>
-        <activity android:name=".conductor.PanelConductorActivity" android:exported="false"/>
-        <activity android:name=".pasajero.PanelPasajeroActivity" android:exported="false"/>
-        <activity android:name=".Login.LoginActivity" android:exported="false"/>
-        <activity android:name=".Login.CrearCuenta" android:exported="false"/>
-        <activity android:name=".pasajero.PerfilPasajeroActivity" android:exported="false"/>
-        <activity android:name=".MensajesActivity" android:exported="false"/>
-        <activity android:name=".pasajero.BuscarDestinoActivity" android:exported="false"/>
-        <activity android:name=".pasajero.BuscarConductorActivity" android:exported="false"/>
-        <activity android:name=".conductor.ConductorAsignado" android:exported="false"/>
-        <activity android:name=".conductor.PerfilConductorActivity" android:exported="false"/>
-        <activity android:name=".conductor.ActivityGanancias" android:exported="false"/>
-        <activity android:name=".pasajero.HistorialViaje" android:exported="false"/>
-        <activity android:name=".pasajero.HistorialViajesPasajeroActivity" android:exported="false"/>
-        <activity android:name=".conductor.DocumentosConductor" android:exported="false"/>
-        <activity android:name=".Soporte" android:exported="false"/>
-        <activity android:name=".conductor.AjustesConductor" android:exported="false"/>
-        <activity android:name=".conductor.ComentariosConductor" android:exported="false"/>
-        <activity android:name=".conductor.CalificarPasajero" android:exported="false"/>
-        <activity android:name=".conductor.ModificarDatosConductor" android:exported="false"/>
-        <activity android:name=".ChatPasajeroActivity" />
-        <activity android:name=".ChatConductorActivity" />
-        <activity android:name=".pasajero.ConductorAsignadoActivity" android:exported="false"/>
-        <activity android:name=".pasajero.DuranteViajePasajeroActivity" android:exported="false"/>
-        <activity android:name=".conductor.DuranteViajeConductor" android:exported="false"/>
-        <activity android:name=".conductor.PasajeroAsignado" android:exported="false"/>
-        <activity android:name=".conductor.ViajeFinalizadoConductor" android:exported="false"/>
+        <!-- MAPAS -->
+        <activity android:name="com.taxisign.pro.conductor.MapaConductorActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.MapaPasajeroActivity" android:exported="false" />
 
+        <!-- CONDUCTOR -->
+        <activity android:name="com.taxisign.pro.conductor.BuscarPasajero" android:exported="false" />
+        <activity android:name="com.taxisign.pro.conductor.SolicitudDetalleConductor" android:exported="false" />
+        <activity android:name="com.taxisign.pro.conductor.PanelConductorActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.conductor.PerfilConductorActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.conductor.ActivityGanancias" android:exported="false" />
+        <activity android:name="com.taxisign.pro.conductor.DocumentosConductor" android:exported="false" />
+        <activity android:name="com.taxisign.pro.conductor.AjustesConductor" android:exported="false" />
+        <activity android:name="com.taxisign.pro.conductor.ComentariosConductor" android:exported="false" />
+        <activity android:name="com.taxisign.pro.conductor.CalificarPasajero" android:exported="false" />
+        <activity android:name="com.taxisign.pro.conductor.ModificarDatosConductor" android:exported="false" />
+        <activity android:name="com.taxisign.pro.conductor.PasajeroAsignado" android:exported="false" />
+        <activity android:name="com.taxisign.pro.conductor.IrHaciaPasajero" android:exported="false" />
+        <activity android:name="com.taxisign.pro.conductor.DuranteViajeConductor" android:exported="false" />
+        <activity android:name="com.taxisign.pro.conductor.ViajeFinalizadoConductor" android:exported="false" />
+
+        <!-- PASAJERO -->
+        <activity android:name="com.taxisign.pro.pasajero.PanelPasajeroActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.PerfilPasajeroActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.BuscarDestinoActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.ConfirmacionViajeActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.BuscarConductorActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.ConductorAsignadoActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.EsperaConductorActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.DuranteViajePasajeroActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.HistorialViaje" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.ViajeFinalizadoActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.HistorialViajesPasajeroActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.DetalleViajeActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.LugaresActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.SeleccionarCiudadActivity" android:exported="false"/>
+        <activity android:name="com.taxisign.pro.pasajero.QrSeguridadPasajeroActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.conductor.QrSeguridadConductorActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.EditarPerfilPasajeroActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.CalificarConductorActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.pasajero.AjustesPasajeroActivity" android:exported="false" />
+
+
+        <!-- LOGIN -->
+        <activity android:name="com.taxisign.pro.Login.LoginActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.Login.CrearCuentaPasajero" android:exported="false" />
+        <activity android:name="com.taxisign.pro.Login.CrearCuentaConductor" android:exported="false" />
+        <activity android:name="com.taxisign.pro.Login.CompletarPerfilConductorGoogle" android:exported="false" />
+        <activity android:name="com.taxisign.pro.Login.CompletarPerfilPasajeroGoogle" android:exported="false" />
+        <activity android:name="com.taxisign.pro.Login.ValidarDocumentosConductor" android:exported="false" />
+        <activity android:name="com.taxisign.pro.Login.EsperaAprobacionConductor" android:exported="false" />
+
+        <!-- CHAT -->
+
+
+        <activity
+            android:name="com.taxisign.pro.ChatPasajeroActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="com.taxisign.pro.ChatConductorActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+
+        <!-- OTROS -->
+        <activity android:name="com.taxisign.pro.notificaciones.NotificationsActivity" android:exported="false" />
+        <activity android:name="com.taxisign.pro.Seguridad.SeguridadContraseña" android:exported="false" />
+        <activity android:name="com.taxisign.pro.Seguridad.Soporte" android:exported="false" />
 
     </application>
+
 </manifest>

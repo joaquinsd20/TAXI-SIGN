@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="#0F172A"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- NOMBRE -->
+
+        <TextView
+            android:id="@+id/tvNombrePasajero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Juan Perez"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <!-- TIPO -->
+
+        <TextView
+            android:id="@+id/tvTipoPasajero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Usuario"
+            android:textColor="#FFD600"
+            android:textSize="13sp"/>
+
+        <!-- RECOJO -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="📍 Punto de recojo"
+            android:textColor="#94A3B8"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvOrigen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Universidad Nacional de Trujillo"
+            android:textColor="#FFFFFF"/>
+
+        <!-- DESTINO -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="🏁 Destino"
+            android:textColor="#94A3B8"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvDestino"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mall Plaza Trujillo"
+            android:textColor="#FFFFFF"/>
+
+        <!-- TARIFA -->
+
+        <TextView
+            android:id="@+id/tvTarifa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="💵 S/ 15.50"
+            android:textColor="#4ADE80"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <!-- DISCAPACIDAD -->
+
+        <TextView
+            android:id="@+id/tvDiscapacidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="⚠️ Usuario Sordo Mudo"
+            android:textColor="#FFD600"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
+        <!-- BOTONES -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnAceptar"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="ACEPTAR"
+                android:textStyle="bold"
+                android:backgroundTint="#FFD600"
+                android:textColor="#000000"/>
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="1dp"/>
+
+            <Button
+                android:id="@+id/btnVerDetalle"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="DETALLE"
+                android:textStyle="bold"
+                android:backgroundTint="#1E293B"
+                android:textColor="#FFFFFF"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

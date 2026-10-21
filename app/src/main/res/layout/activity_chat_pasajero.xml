@@ -1,44 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212">
+    android:background="#121212"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:id="@+id/header_chat"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
+        android:minHeight="60dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingStart="8dp"
-        android:paddingEnd="16dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
         android:background="#1E1E1E"
-        android:elevation="6dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageButton
             android:id="@+id/btn_volver"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@android:drawable/ic_menu_revert"
             app:tint="#FFD600"
             android:contentDescription="Volver" />
 
-
         <TextView
             android:id="@+id/tv_avatar_conductor"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:layout_marginStart="8dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="6dp"
             android:gravity="center"
             android:text="C"
             android:textColor="#121212"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:background="@android:drawable/presence_audio_online"
             android:backgroundTint="#FFD600" />
@@ -48,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_marginStart="12dp">
+            android:layout_marginStart="10dp">
 
             <TextView
                 android:id="@+id/tv_nombre_conductor"
@@ -59,13 +62,34 @@
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="🤟 Comunicación visual"
-                android:textColor="#FFD600"
-                android:textSize="11sp" />
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_modo_senas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🤟 Señas"
+                    android:textColor="#FFD600"
+                    android:textSize="11sp"
+                    app:thumbTint="#FFD600"
+                    app:trackTint="#666666" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_modo_voz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="🔊 Voz"
+                    android:textColor="#FFD600"
+                    android:textSize="11sp"
+                    app:thumbTint="#FFD600"
+                    app:trackTint="#666666" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <View
@@ -74,14 +98,17 @@
             android:layout_height="10dp"
             android:background="@android:drawable/presence_online"
             android:visibility="gone" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_mensajes"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
         android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@id/header_chat"
         app:layout_constraintBottom_toTopOf="@id/card_respuesta_conductor"
@@ -92,11 +119,11 @@
         android:id="@+id/card_respuesta_conductor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="4dp"
         android:visibility="gone"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="14dp"
         app:cardBackgroundColor="#1E1E1E"
         app:cardElevation="4dp"
         app:layout_constraintBottom_toTopOf="@id/layout_panel_inferior"
@@ -108,11 +135,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="12dp">
+            android:padding="10dp">
 
             <TextView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:gravity="center"
                 android:text="C"
                 android:textColor="#121212"
@@ -128,8 +155,27 @@
                 android:layout_marginStart="10dp"
                 android:text="Entendido, ya voy"
                 android:textColor="#FFFFFF"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_ver_senas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="🤟"
+                android:textSize="18sp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="0dp"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                app:cornerRadius="12dp"
+                app:backgroundTint="#FFD600"
+                android:textColor="#1A1A2E"
+                android:contentDescription="Ver mensaje en señas" />
+
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
@@ -138,22 +184,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="#1A1A1A"
-        android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#2A2A2A" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="42dp"
             android:orientation="horizontal"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
             android:paddingTop="4dp">
 
             <TextView
@@ -164,10 +204,8 @@
                 android:gravity="center"
                 android:text="📍 Ubicación"
                 android:textColor="#FFD600"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginEnd="4dp"
-                android:paddingBottom="4dp" />
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tab_instrucciones"
@@ -177,10 +215,8 @@
                 android:gravity="center"
                 android:text="🗺️ Ruta"
                 android:textColor="#888888"
-                android:textSize="12sp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:paddingBottom="4dp" />
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tab_personal"
@@ -190,101 +226,173 @@
                 android:gravity="center"
                 android:text="🤟 Personal"
                 android:textColor="#888888"
-                android:textSize="12sp"
-                android:layout_marginStart="4dp"
-                android:paddingBottom="4dp" />
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
-        <GridLayout
-            android:id="@+id/grid_ubicacion"
+        <LinearLayout
+            android:id="@+id/contenedor_respuestas_rapidas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="2"
-            android:padding="8dp"
-            android:visibility="visible">
+            android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_estoy_aqui"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_width="0dp"
-                android:layout_height="90dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="5dp"
-                android:backgroundTint="#1E3A2F"
-                android:text="ESTOY\nAQUÍ"
-                android:textSize="13sp"
-                android:textColor="#FFFFFF"
-                app:cornerRadius="14dp"
-                app:icon="@android:drawable/ic_menu_mylocation"
-                app:iconGravity="top"
-                app:iconSize="28dp"
-                app:iconTint="#4CAF50" />
+            <GridLayout
+                android:id="@+id/grid_ubicacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:padding="6dp"
+                android:visibility="visible">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_sigo_caminando"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_width="0dp"
-                android:layout_height="90dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="5dp"
-                android:backgroundTint="#1E2E3A"
-                android:text="SIGO\nCAMINANDO"
-                android:textSize="13sp"
-                android:textColor="#FFFFFF"
-                app:cornerRadius="14dp"
-                app:icon="@android:drawable/ic_menu_directions"
-                app:iconGravity="top"
-                app:iconSize="28dp"
-                app:iconTint="#2196F3" />
-        </GridLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_estoy_aqui"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="3dp"
+                    android:backgroundTint="#1E3A2F"
+                    android:text="📍 ESTOY AQUÍ"
+                    android:textSize="11sp"
+                    android:textColor="#FFFFFF"
+                    app:cornerRadius="12dp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="4dp"
-            android:background="#2A2A2A" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_sigo_caminando"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="3dp"
+                    android:backgroundTint="#1E2E3A"
+                    android:text="🚶 SIGO CAMINANDO"
+                    android:textSize="10sp"
+                    android:textColor="#FFFFFF"
+                    app:cornerRadius="12dp" />
+
+            </GridLayout>
+
+            <GridLayout
+                android:id="@+id/grid_instrucciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:padding="6dp"
+                android:visibility="gone">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_esperame"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="3dp"
+                    android:backgroundTint="#3A2E1E"
+                    android:text="⏳ ESPÉRAME"
+                    android:textSize="11sp"
+                    android:textColor="#FFFFFF"
+                    app:cornerRadius="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_estoy_saliendo"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="3dp"
+                    android:backgroundTint="#263A1E"
+                    android:text="🚪 ESTOY SALIENDO"
+                    android:textSize="10sp"
+                    android:textColor="#FFFFFF"
+                    app:cornerRadius="12dp" />
+
+            </GridLayout>
+
+            <GridLayout
+                android:id="@+id/grid_personal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:padding="6dp"
+                android:visibility="gone">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_no_puedo_hablar"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="3dp"
+                    android:backgroundTint="#3A1E1E"
+                    android:text="🤟 NO PUEDO HABLAR"
+                    android:textSize="10sp"
+                    android:textColor="#FFFFFF"
+                    app:cornerRadius="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_usa_chat"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="3dp"
+                    android:backgroundTint="#1E293B"
+                    android:text="💬 USA EL CHAT"
+                    android:textSize="11sp"
+                    android:textColor="#FFFFFF"
+                    app:cornerRadius="12dp" />
+
+            </GridLayout>
+
+        </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/contenedor_mensaje_libre"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="10dp">
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_mensaje_libre"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_weight="0"
-                android:text="✏️  Escribir mensaje personalizado"
+                android:layout_height="48dp"
+                android:text="✏️ Escribir mensaje personalizado"
                 android:textColor="#AAAAAA"
-                android:textSize="13sp"
-                app:cornerRadius="14dp"
+                android:textSize="12sp"
+                app:cornerRadius="12dp"
                 app:strokeColor="#333333"
                 app:strokeWidth="1dp" />
 
             <EditText
                 android:id="@+id/et_mensaje_libre"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:visibility="gone"
+                android:background="#242424"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:hint="Escribe..."
+                android:textColorHint="#777777"
                 android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:hint="Escribe tu mensaje..."
-                android:textColorHint="#555555" android:maxLines="3"
-                android:inputType="textMultiLine|textCapSentences" />
+                android:textSize="13sp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:inputType="textCapSentences" />
 
             <ImageButton
                 android:id="@+id/btn_enviar_libre"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
                 android:visibility="gone"
+                android:background="#FFD600"
                 android:src="@android:drawable/ic_menu_send"
                 app:tint="#121212"
                 android:contentDescription="Enviar mensaje" />
+
         </LinearLayout>
+
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

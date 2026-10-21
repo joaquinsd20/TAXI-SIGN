@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@drawable/bg_taxi_neon"
+    tools:context=".Login.CrearCuentaPasajero">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="40dp">
+
+        <!-- BOTON VOLVER -->
+        <ImageButton
+            android:id="@+id/btnVolverPasajero"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="22dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Volver"
+            android:padding="14dp"
+            android:src="@android:drawable/ic_menu_revert"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#FFD600"/>
+
+        <!-- LOGO -->
+        <ImageView
+            android:id="@+id/imgLogoPasajero"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo_taxi"
+            app:layout_constraintTop_toBottomOf="@id/btnVolverPasajero"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- TITULO -->
+        <TextView
+            android:id="@+id/tvTituloPasajero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-8dp"
+            android:text="Registro Pasajero"
+            android:textColor="#FFFFFF"
+            android:textSize="38sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/imgLogoPasajero"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- SUBTITULO -->
+        <TextView
+            android:id="@+id/tvSubtituloPasajero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Viaja rápido y seguro por Trujillo"
+            android:textColor="#B8C1D9"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/tvTituloPasajero"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- CARD PRINCIPAL DE FORMULARIO -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardRegistroPasajero"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="#151B31"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="14dp"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtituloPasajero"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- 1. NOMBRE COMPLETO -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    app:boxBackgroundColor="#0B1020"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="#2A3352"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:hintTextColor="#FFD600"
+                    app:startIconDrawable="@drawable/ic_person"
+                    app:startIconTint="#FFD600">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNombrePasajero"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:hint="Nombre completo"
+                        android:inputType="textPersonName"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#7E8695"
+                        android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 2. CELULAR -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    app:boxBackgroundColor="#0B1020"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="#2A3352"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:hintTextColor="#FFD600"
+                    app:prefixText="+51 "
+                    app:prefixTextColor="#FFD600"
+                    app:startIconDrawable="@drawable/ic_phone"
+                    app:startIconTint="#FFD600">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etTelefonoPasajero"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:hint="Número de celular"
+                        android:inputType="phone"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#7E8695"
+                        android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 3. EDAD -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    app:boxBackgroundColor="#0B1020"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="#2A3352"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:hintTextColor="#FFD600"
+                    app:suffixText=" años"
+                    app:suffixTextColor="#B8C1D9"
+                    app:startIconDrawable="@drawable/ic_person"
+                    app:startIconTint="#FFD600">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEdadPasajero"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:hint="Edad"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#7E8695"
+                        android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 4. CORREO ELECTRONICO -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    app:boxBackgroundColor="#0B1020"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="#2A3352"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:hintTextColor="#FFD600"
+                    app:startIconDrawable="@drawable/ic_email"
+                    app:startIconTint="#FFD600">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEmailPasajero"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:hint="Correo electrónico"
+                        android:inputType="textEmailAddress"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#7E8695"
+                        android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 5. CONTRASEÑA -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="22dp"
+                    app:boxBackgroundColor="#0B1020"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="#2A3352"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:hintTextColor="#FFD600"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="#B8C1D9"
+                    app:startIconDrawable="@drawable/ic_lock"
+                    app:startIconTint="#FFD600">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPassPasajero"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:hint="Contraseña"
+                        android:inputType="textPassword"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#7E8695"
+                        android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- SECCIÓN DE ACCESIBILIDAD (obligatoria) -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Tienes alguna condición auditiva o del habla?"
+                    android:textColor="#B8C1D9"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginStart="4dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Esto nos ayuda a conectarte con conductores preparados para comunicarse contigo"
+                    android:textColor="#7E8695"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginStart="4dp"/>
+
+                <RadioGroup
+                    android:id="@+id/rgAccesibilidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="24dp">
+                    <RadioButton
+                        android:id="@+id/rbNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Usuario normal (sin condición auditiva/habla)"
+                        android:textColor="#FFFFFF"
+                        android:buttonTint="#FFD600"
+                        android:textSize="14sp"
+                        android:checked="true"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"/>
+                    <RadioButton
+                        android:id="@+id/rbSordo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sordo (no escucho)"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:buttonTint="#FFD600"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"/>
+                    <RadioButton
+                        android:id="@+id/rbMudo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mudo (no hablo)"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:buttonTint="#FFD600"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"/>
+                    <RadioButton
+                        android:id="@+id/rbSordomudo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sordomudo (no escucho ni hablo)"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:buttonTint="#FFD600"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"/>
+                </RadioGroup>
+
+                <!-- BOTON -->
+                <Button
+                    android:id="@+id/btnRegistrarPasajero"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:background="@drawable/bg_button_yellow"
+                    android:text="REGISTRARME"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textSize="19sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ENLACE DE REDIRECCIÓN A LOGIN -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/cardRegistroPasajero"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¿Ya tienes una cuenta?"
+                android:textColor="#AEB6CF"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tvYaTengoCuentaPasajero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Inicia sesión aquí"
+                android:textColor="#FFD600"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

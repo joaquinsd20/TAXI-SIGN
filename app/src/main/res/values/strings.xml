@@ -90,4 +90,8 @@
     <string name="cd_work_icon">Ir al trabajo</string>
     <string name="cd_favorites_icon">Mis favoritos</string>
     <string name="cd_sos_button">Botón de emergencia SOS</string>
+
+    <!-- Google API Key -->
+    <string name="google_maps_key">AIzaSyBXZDPoloKmzL9k0tDLBjfQ37hZ2kh87JE</string>
+
 </resources>

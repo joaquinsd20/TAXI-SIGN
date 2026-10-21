@@ -35,64 +35,59 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/tvPromedioGrande"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4.9"
+                    android:text="0.0"
                     android:textColor="#FFD600"
                     android:textSize="56sp"
                     android:textStyle="bold"/>
 
                 <RatingBar
+                    android:id="@+id/ratingBarPromedio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="?android:attr/ratingBarStyleSmall"
                     android:numStars="5"
-                    android:rating="4.9"
+                    android:rating="0"
                     android:progressTint="#FFD600"
                     android:layout_marginBottom="10dp"/>
 
                 <TextView
+                    android:id="@+id/tvBaseViajes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Basado en los últimos 50 viajes"
+                    android:text="Aún no tienes calificaciones"
                     android:textColor="#B8C1D9"
                     android:textSize="12sp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvTituloComentarios"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lo que más gusta de ti:"
+            android:text="Comentarios de pasajeros:"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:visibility="gone"/>
 
-        <com.google.android.material.chip.ChipGroup
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerComentarios"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
 
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🚗 Auto muy limpio"
-                app:chipBackgroundColor="#252D47"
-                android:textColor="#FFFFFF"/>
-
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="⚡ Conducción segura"
-                app:chipBackgroundColor="#252D47"
-                android:textColor="#FFFFFF"/>
-
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="😊 Muy amable"
-                app:chipBackgroundColor="#252D47"
-                android:textColor="#FFFFFF"/>
-        </com.google.android.material.chip.ChipGroup>
+        <TextView
+            android:id="@+id/tvSinComentarios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="Todavía no tienes comentarios. ¡Completa viajes para recibir reseñas!"
+            android:textColor="#9CA4C3"
+            android:textSize="13sp"/>
 
     </LinearLayout>
 </ScrollView>

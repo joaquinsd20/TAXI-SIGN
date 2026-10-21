@@ -7,11 +7,12 @@
     android:background="@drawable/bg_taxi_neon"
     android:padding="20dp">
 
+    <!-- Encabezado -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_marginBottom="30dp">
+        android:layout_marginBottom="25dp">
         <ImageButton
             android:id="@+id/btnBackGanancias"
             android:layout_width="45dp"
@@ -22,13 +23,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ganancias"
+            android:text="Mis Ingresos"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginStart="15dp"/>
     </LinearLayout>
 
+    <!-- Tarjeta Principal: Resumen Financiero Estimado -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,44 +41,131 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="30dp"
+            android:padding="25dp"
             android:gravity="center">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Saldo para retirar"
-                android:textColor="#B8C1D9" />
+                android:text="Total Estimado (Efectivo / Digital)"
+                android:textColor="#B8C1D9"
+                android:textSize="14sp" />
             <TextView
-                android:id="@+id/tvSaldoActual"
+                android:id="@+id/tvMontoTotalGanado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="S/ 450.00"
+                android:text="S/ 1,250.00"
                 android:textColor="#FFD600"
-                android:textSize="38sp"
-                android:textStyle="bold"/>
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dinero directo en tus manos"
+                android:textColor="#4CAF50"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/btnVerHistorial"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="VER HISTORIAL DE VIAJES"
-        android:backgroundTint="#252D47"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="15dp"
-        app:cornerRadius="15dp"
-        app:icon="@android:drawable/ic_menu_recent_history"
-        app:iconTint="#FFD600"/>
+    <!-- Subtítulo de Estadísticas -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resumen de Esfuerzo"
+        android:textColor="#B8C1D9"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"/>
 
+    <!-- Bloque de Métricas Básicas (Viajes y Tiempo) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginBottom="25dp">
+
+        <!-- Cuadro: Total Viajes -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            app:cardBackgroundColor="#151B31"
+            app:cardCornerRadius="15dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="10dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🚖 Viajes Totales" android:textColor="#B8C1D9" android:textSize="12sp"/>
+                <TextView android:id="@+id/tvTotalViajes" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="48" android:textColor="#FFFFFF" android:textSize="22sp" android:textStyle="bold" android:layout_marginTop="4dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Cuadro: Horas Conectado -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            app:cardBackgroundColor="#151B31"
+            app:cardCornerRadius="15dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="10dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="⏱️ Horas Online" android:textColor="#B8C1D9" android:textSize="12sp"/>
+                <TextView android:id="@+id/tvHorasOnline" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="24.5 h" android:textColor="#FFFFFF" android:textSize="22sp" android:textStyle="bold" android:layout_marginTop="4dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Detalle de tus ganancias"
+        android:textColor="#FFD600"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerGanancias"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvSinGanancias"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Aún no tienes viajes completados.\n¡Tus ganancias aparecerán aquí!"
+        android:textColor="#9CA4C3"
+        android:textSize="14sp"
+        android:visibility="gone"/>
+
+    <!-- Botón para ver el desglose o lista completa de historial -->
     <Button
-        android:id="@+id/btnRetirar"
+        android:id="@+id/btnVerHistorialDetallado"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="RETIRAR DINERO"
+        android:text="VER HISTORIAL DETALLADO"
         android:backgroundTint="#FFD600"
         android:textColor="#151B31"
         android:textStyle="bold"
-        app:cornerRadius="15dp"/>
+        app:cornerRadius="15dp"
+        app:icon="@android:drawable/ic_menu_recent_history"
+        app:iconTint="#151B31"/>
 
 </LinearLayout>

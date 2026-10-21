@@ -4,10 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_taxi_neon">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/_mapa_conductor" />
+    <!-- ✅ Mapa directo, sin <include> -->
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".conductor.DuranteViajeConductor" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardInstrucciones"
@@ -131,12 +136,22 @@
                         android:textStyle="bold"
                         android:textSize="18sp"/>
                     <TextView
+                        android:id="@+id/tvNombreConductorViaje"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Pago: Efectivo • S/ 18.50"
                         android:textColor="#FFD600"
                         android:textSize="14sp"/>
                 </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btnLlamarPasajero"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_boton_circular"
+                    android:src="@android:drawable/stat_sys_phone_call"
+                    app:tint="#000" />
 
                 <ImageButton
                     android:id="@+id/btnMensajePasajero"
@@ -152,6 +167,20 @@
                 android:layout_height="1dp"
                 android:background="#252D47"
                 android:layout_marginBottom="15dp"/>
+
+            <Button
+                android:id="@+id/btnNavegarDestino"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="🧭 NAVEGAR CON GOOGLE MAPS"
+                android:textColor="#FFD600"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:backgroundTint="@android:color/transparent"
+                app:strokeColor="#FFD600"
+                app:strokeWidth="1dp"
+                android:layout_marginBottom="12dp"
+                app:cornerRadius="18dp"/>
 
             <Button
                 android:id="@+id/btnFinalizarViaje"

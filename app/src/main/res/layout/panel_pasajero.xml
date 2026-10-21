@@ -1,195 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#050816"
-    tools:context=".pasajero.PanelPasajeroActivity">
+    android:background="#0F1320">
 
     <!-- MAPA -->
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mapaBaseFragment"
-        android:name="com.example.taxisign.mapa.MapaBaseFragment"
+        android:name="com.taxisign.pro.mapa.MapaBaseFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomContainer"/>
 
-    <!-- HEADER -->
-
+    <!-- BARRA SUPERIOR FLOTANTE -->
     <LinearLayout
-        android:id="@+id/headerLayout"
+        android:id="@+id/topBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="16dp"
-        android:gravity="center_vertical"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_surface_card"
+        android:elevation="6dp"
+        android:padding="12dp"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <View
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="@drawable/bg_circle_surface"/>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/bg_borde"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp">
+            android:layout_marginStart="12dp"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:src="@drawable/ic_hand"
-                app:tint="#FFD600"/>
-
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical">
+                android:text="Hola,"
+                android:textColor="#9AA3B8"
+                android:textSize="13sp"/>
 
-                <TextView
-                    android:id="@+id/txtUsuario"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="¡Hola!"
-                    android:textColor="#FFD600"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/txtUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pasajero"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="¿A dónde vamos hoy?"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp"/>
+        <LinearLayout
+            android:id="@+id/btnCiudadActual"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_chip_ciudad"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginEnd="10dp">
 
-            </LinearLayout>
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_location_pin"
+                app:tint="#FFCE3A"/>
 
+            <TextView
+                android:id="@+id/txtCiudadActual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="Ciudad"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:maxWidth="90dp"/>
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/btn_menu"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="8dp"
-            android:background="@android:color/transparent"
-            android:padding="12dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_circle_surface"
             android:src="@drawable/ic_menu"
-            app:tint="#FFD600"/>
-
+            android:scaleType="centerInside"
+            android:padding="12dp"
+            app:tint="#FFCE3A"/>
     </LinearLayout>
 
-    <!-- BOTÓN GPS FLOTANTE -->
-
+    <!-- BOTÓN MI UBICACIÓN -->
     <ImageButton
         android:id="@+id/btnMiUbicacion"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/bg_circle_dark"
-        android:elevation="10dp"
-        android:padding="12dp"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/bg_circle_surface"
         android:src="@drawable/ic_location"
+        android:scaleType="centerInside"
+        android:padding="13dp"
+        android:elevation="6dp"
+        app:tint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerLayout"
-        app:tint="#FFD600"/>
+        app:layout_constraintBottom_toTopOf="@id/bottomContainer"/>
 
-    <!-- CONTENIDO INFERIOR -->
-
+    <!-- SHEET INFERIOR -->
     <LinearLayout
         android:id="@+id/bottomContainer"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="10dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:background="@drawable/bg_sheet_top"
+        android:elevation="12dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="14dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav">
 
-        <!-- BUSCADOR -->
+        <View
+            android:layout_width="44dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="14dp"
+            android:background="@drawable/bg_handle"/>
 
+        <!-- Buscador -->
         <LinearLayout
             android:id="@+id/layout_buscar"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:background="@drawable/bg_input_dark"
-            android:gravity="center_vertical"
+            android:layout_height="60dp"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_input_round"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_search"
-                app:tint="#FFD600"/>
+                app:tint="#FFCE3A"/>
 
             <TextView
                 android:id="@+id/txtDestino"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="¿A dónde vas?"
-                android:textColor="#9CA4C3"
-                android:textSize="18sp"/>
-
-            <View
                 android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"/>
-
-
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:text="¿A dónde quieres ir?"
+                android:textColor="#C7CDDC"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"/>
         </LinearLayout>
 
-        <!-- TÍTULO -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="LUGARES RÁPIDOS"
-            android:textColor="#AAB1CB"
-            android:textSize="13sp"
-            android:textStyle="bold"/>
-
-        <!-- CHIPS -->
-
+        <!-- Accesos rápidos -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="14dp"
+            android:weightSum="2">
 
             <LinearLayout
                 android:id="@+id/chip_casa"
                 android:layout_width="0dp"
-                android:layout_height="62dp"
+                android:layout_height="66dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_input_dark"
-                android:gravity="center_vertical"
+                android:layout_marginEnd="7dp"
                 android:orientation="horizontal"
-                android:padding="12dp">
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_surface_card"
+                android:paddingStart="16dp"
+                android:paddingEnd="12dp">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
                     android:src="@drawable/ic_home"
-                    app:tint="#FFD600"/>
+                    app:tint="#FFCE3A"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="12dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -204,34 +211,33 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ir ahora"
-                        android:textColor="#9CA4C3"
-                        android:textSize="11sp"/>
-
+                        android:textColor="#9AA3B8"
+                        android:textSize="12sp"/>
                 </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/chip_trabajo"
                 android:layout_width="0dp"
-                android:layout_height="62dp"
-                android:layout_marginStart="8dp"
+                android:layout_height="66dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_input_dark"
-                android:gravity="center_vertical"
+                android:layout_marginStart="7dp"
                 android:orientation="horizontal"
-                android:padding="12dp">
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_surface_card"
+                android:paddingStart="16dp"
+                android:paddingEnd="12dp">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
                     android:src="@drawable/ic_work"
-                    app:tint="#FFD600"/>
+                    app:tint="#FFCE3A"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="12dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -246,345 +252,251 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ir ahora"
-                        android:textColor="#9CA4C3"
-                        android:textSize="11sp"/>
-
+                        android:textColor="#9AA3B8"
+                        android:textSize="12sp"/>
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
 
-        <!-- BOTÓN TAXI -->
-
+        <!-- Mis lugares -->
         <LinearLayout
-            android:id="@+id/btn_pedir_taxi"
+            android:id="@+id/btn_mis_lugares"
             android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/bg_button_yellow"
-            android:gravity="center_vertical"
+            android:layout_height="54dp"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_surface_soft"
             android:paddingStart="16dp"
             android:paddingEnd="16dp">
 
             <ImageView
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:src="@drawable/ic_taxi"
-                app:tint="#000000"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PEDIR TAXI"
-                    android:textColor="#000000"
-                    android:textSize="22sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Conductor más cercano"
-                    android:textColor="#1A1A1A"
-                    android:textSize="11sp"/>
-
-            </LinearLayout>
-
-            <ImageView
                 android:layout_width="22dp"
                 android:layout_height="22dp"
-                android:src="@drawable/ic_arrow_right"
-                app:tint="#000000"/>
+                android:src="@drawable/ic_location_pin"
+                app:tint="#FFCE3A"/>
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:text="Mis lugares frecuentes"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_arrow_right"
+                app:tint="#9AA3B8"/>
         </LinearLayout>
 
-        <!-- NAVBAR -->
-
+        <!-- Pedir taxi -->
         <LinearLayout
-            android:id="@+id/bottomNav"
+            android:id="@+id/btn_pedir_taxi"
             android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_input_dark"
+            android:layout_height="62dp"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_pill_accent"
+            android:elevation="2dp">
 
-            <!-- INICIO -->
-
-            <LinearLayout
-                android:id="@+id/tab_inicio"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_home"
-                    app:tint="#FFD600"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Inicio"
-                    android:textColor="#FFD600"
-                    android:textSize="11sp"/>
-
-            </LinearLayout>
-
-            <!-- VIAJES -->
-
-            <LinearLayout
-                android:id="@+id/tab_viajes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_routes"
-                    app:tint="#AAB1CB"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Viajes"
-                    android:textColor="#AAB1CB"
-                    android:textSize="11sp"/>
-
-            </LinearLayout>
-
-            <!-- MENSAJES -->
-
-            <LinearLayout
-                android:id="@+id/tab_mensajes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_chat"
-                    app:tint="#AAB1CB"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Mensajes"
-                    android:textColor="#AAB1CB"
-                    android:textSize="11sp"/>
-
-            </LinearLayout>
-
-            <!-- PERFIL -->
-
-            <LinearLayout
-                android:id="@+id/tab_perfil"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_person"
-                    app:tint="#AAB1CB"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Perfil"
-                    android:textColor="#AAB1CB"
-                    android:textSize="11sp"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <!-- PANEL BUSCAR DESTINO -->
-
-    <LinearLayout
-        android:id="@+id/panelBuscarDestino"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="14dp"
-        android:background="#081120"
-        android:elevation="12dp"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
-            <ImageButton
-                android:id="@+id/btnCerrarBusqueda"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@android:color/transparent"
-                android:rotation="180"
-                android:src="@drawable/ic_arrow_right"
-                app:tint="#FFD600"/>
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_taxi"
+                app:tint="#151B31"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Buscar destino"
+                android:text="Pedir taxi"
+                android:textColor="#151B31"
+                android:textSize="19sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:orientation="horizontal"
+        android:background="#10141F"
+        android:weightSum="3"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/tab_viajes"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_routes"
+                app:tint="#9AA3B8"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Viajes"
+                android:textColor="#9AA3B8"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tab_notificaciones"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_notifications"
+                app:tint="#9AA3B8"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Avisos"
+                android:textColor="#9AA3B8"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tab_perfil"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_person"
+                app:tint="#9AA3B8"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Perfil"
+                android:textColor="#9AA3B8"
+                android:textSize="12sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- PANEL DE BÚSQUEDA (overlay) -->
+    <LinearLayout
+        android:id="@+id/panelBuscarDestino"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#0F1320"
+        android:padding="18dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageButton
+                android:id="@+id/btnCerrarBusqueda"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_circle_surface"
+                android:src="@drawable/ic_arrow_back"
+                android:scaleType="centerInside"
+                android:padding="12dp"
+                app:tint="#FFFFFF"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:text="¿A dónde vas?"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
-
         </LinearLayout>
 
         <EditText
             android:id="@+id/et_busqueda"
             android:layout_width="match_parent"
             android:layout_height="58dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/bg_borde"
-            android:drawableStart="@drawable/ic_location"
-            android:drawablePadding="10dp"
-            android:hint="¿A dónde deseas ir?"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:paddingHorizontal="16dp"
+            android:background="@drawable/bg_input_round"
+            android:hint="Escribe una dirección o lugar"
+            android:textColorHint="#7C849B"
             android:textColor="#FFFFFF"
-            android:textColorHint="#AAB1CB"
-            android:textSize="17sp"
-            app:drawableTint="#FFD600"/>
+            android:textSize="16sp"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="12dp"
+            android:drawableTint="#FFCE3A"
+            android:inputType="text"
+            android:imeOptions="actionSearch"/>
+
+        <TextView
+            android:id="@+id/tvTituloRecientes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Búsquedas recientes"
+            android:textColor="#9AA3B8"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerRecientes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerResultados"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginTop="8dp"
-            android:background="#091126"
-            android:visibility="gone"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:text="DESTINOS FRECUENTES"
-            android:textColor="#FFD600"
-            android:textSize="11sp"
-            android:textStyle="bold"/>
-
-        <LinearLayout
-            android:id="@+id/itemCasa"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_borde"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="14dp">
-
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_home"
-                app:tint="#FFD600"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="Casa"
-                android:textColor="#FFFFFF"
-                android:textSize="17sp"
-                android:textStyle="bold"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/itemUniversidad"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_borde"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="14dp">
-
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_school"
-                app:tint="#FFD600"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="Universidad"
-                android:textColor="#FFFFFF"
-                android:textSize="17sp"
-                android:textStyle="bold"/>
-
-        </LinearLayout>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="12dp"/>
 
         <LinearLayout
             android:id="@+id/btn_confirmar_destino"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:layout_marginTop="18dp"
-            android:background="@drawable/bg_button_yellow"
-            android:gravity="center">
+            android:layout_height="62dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/bg_pill_accent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CONFIRMAR DESTINO"
-                android:textColor="#000000"
-                android:textSize="17sp"
+                android:text="Confirmar destino"
+                android:textColor="#151B31"
+                android:textSize="18sp"
                 android:textStyle="bold"/>
-
         </LinearLayout>
-
     </LinearLayout>
-    <!-- LOADING -->
-
-    <ProgressBar
-        android:id="@+id/progress_ubicacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

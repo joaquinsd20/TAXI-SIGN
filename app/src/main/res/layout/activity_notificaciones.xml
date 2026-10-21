@@ -1,82 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/bg_taxi_neon"
-    android:padding="20dp">
+    android:background="#050816"
+    tools:context=".notificaciones.NotificationsActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- HEADER CON TÍTULO Y BOTÓN LIMPIAR -->
+    <LinearLayout
+        android:id="@+id/headerNotifications"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Nuevos Pedidos"
-        android:textColor="#FFFFFF"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="#151B31"
-        app:cardCornerRadius="26dp"
-        app:cardElevation="10dp">
+        <!-- Botón volver -->
+        <ImageButton
+            android:id="@+id/btnBackNotifications"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_input_dark"
+            android:padding="12dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="#FFD600"
+            android:contentDescription="Volver" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- Título -->
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:text="Notificaciones"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="15dp">
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/bg_boton_circular"
-                    android:text="👤"
-                    android:gravity="center"
-                    android:textSize="24sp"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Maria Lopez"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="⭐ 4.8 • A 1.2 km"
-                        android:textColor="#B8C1D9"
-                        android:textSize="12sp"/>
-                </LinearLayout>
-            </LinearLayout>
+        <!-- Botón marcar como leído -->
+        <ImageButton
+            android:id="@+id/btnMarkAllRead"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_input_dark"
+            android:padding="10dp"
+            android:src="@drawable/ic_check"
+            app:tint="#FFD600"
+            android:contentDescription="Marcar como leído" />
+
+    </LinearLayout>
+
+    <!-- TABS: TODAS / SIN LEER -->
+    <LinearLayout
+        android:id="@+id/tabsContainer"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="#0A0F1B"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerNotifications">
+
+        <!-- Tab: Todas -->
+        <LinearLayout
+            android:id="@+id/tabAll"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="📍 Punto de Recojo: Mall Plaza"
+                android:text="Todas"
                 android:textColor="#FFD600"
-                android:textStyle="bold"
-                android:layout_marginBottom="20dp"/>
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="ACEPTAR VIAJE"
-                android:backgroundTint="#FFD600"
-                android:textColor="#151B31"
-                android:textStyle="bold"
-                app:cornerRadius="15dp"/>
+            <View
+                android:layout_width="40dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="6dp"
+                android:background="#FFD600" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+
+        <!-- Divisor -->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:background="#1A1F2E" />
+
+        <!-- Tab: Sin leer -->
+        <LinearLayout
+            android:id="@+id/tabUnread"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sin leer"
+                    android:textColor="#9CA4C3"
+                    android:textSize="15sp" />
+
+                <!-- Badge de número de notificaciones sin leer -->
+                <View
+                    android:id="@+id/badgeUnreadCount"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/bg_badge_red" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- LISTA DE NOTIFICACIONES -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerNotifications"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="8dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tabsContainer"
+        tools:listitem="@layout/item_notification" />
+
+    <!-- ESTADO VACÍO -->
+    <LinearLayout
+        android:id="@+id/emptyState"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tabsContainer">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📬"
+            android:textSize="64sp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No hay notificaciones"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Volveremos a contactarte cuando haya actualizaciones"
+            android:textColor="#9CA4C3"
+            android:textSize="14sp"
+            android:gravity="center" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

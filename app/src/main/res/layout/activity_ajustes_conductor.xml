@@ -91,6 +91,30 @@
                 app:icon="@android:drawable/ic_lock_lock"
                 app:iconTint="#FFD600"
                 android:paddingStart="20dp"/>
+            <Button
+                android:id="@+id/btnSoporteConductor"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Contactar soporte"
+                android:backgroundTint="#151B31"
+                android:textColor="#FFFFFF"
+                android:gravity="start|center_vertical"
+                app:icon="@android:drawable/ic_dialog_email"
+                app:iconTint="#FFD600"
+                android:paddingStart="20dp"/>
+
+            <Button
+                android:id="@+id/btnEliminarCuentaConductor"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Eliminar cuenta"
+                android:backgroundTint="#3A1E1E"
+                android:textColor="#FF5252"
+                android:gravity="start|center_vertical"
+                app:icon="@android:drawable/ic_menu_delete"
+                app:iconTint="#FF5252"
+                android:paddingStart="20dp"/>
+
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

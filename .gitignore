@@ -13,3 +13,24 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# --- Android Studio / IntelliJ ---
+.idea/
+*.hprof
+
+# --- Kotlin ---
+.kotlin/
+
+# --- Artefactos de build de todos los modulos ---
+**/build/
+**/release/*.aab
+**/release/*.apk
+
+# --- Claves de firma (NUNCA subir) ---
+*.jks
+*.keystore
+/app/release/
+
+# --- Archivos locales temporales ---
+paldo-local
+*.log
