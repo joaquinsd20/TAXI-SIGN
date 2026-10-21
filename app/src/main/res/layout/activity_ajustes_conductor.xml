@@ -80,6 +80,51 @@
 
             <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#252D47" android:layout_marginHorizontal="20dp"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="14dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ajustes_ubicacion_fondo_titulo"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvEstadoUbicacionFondo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/ajustes_ubicacion_fondo_descripcion"
+                        android:textColor="#B8C1D9"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchUbicacionFondo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    app:thumbTint="#FFD600"
+                    app:trackTint="#B8C1D9"/>
+
+            </LinearLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#252D47" android:layout_marginHorizontal="20dp"/>
+
             <Button
                 android:id="@+id/btnCambiarPass"
                 android:layout_width="match_parent"

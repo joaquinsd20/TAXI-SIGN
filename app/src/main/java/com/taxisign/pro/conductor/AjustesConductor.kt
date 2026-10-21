@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.taxisign.pro.Login.LoginActivity
 import com.taxisign.pro.R
+import com.taxisign.pro.Seguridad.LocationForegroundService
+import com.taxisign.pro.Seguridad.PermisoUbicacionFondoManager
+import com.taxisign.pro.Seguridad.PermisoUbicacionHelper
 import com.taxisign.pro.Seguridad.SeguridadContraseña
 import com.taxisign.pro.SessionManager
 
@@ -21,11 +25,31 @@ class AjustesConductor : AppCompatActivity() {
     private val auth by lazy { FirebaseAuth.getInstance() }
     private val dbRoot by lazy { FirebaseDatabase.getInstance().reference }
 
+    /** Evita que el propio setter del switch dispare el listener al actualizar el estado. */
+    private var actualizandoEstado = false
+
+    /**
+     * Aviso destacado + consentimiento. Se crea como campo para registrar el
+     * launcher de permisos antes de que la Activity llegue a STARTED.
+     */
+    private val permisoUbicacionFondo = PermisoUbicacionFondoManager(this) { concedido ->
+        if (concedido) {
+            Toast.makeText(
+                this,
+                "Ubicación en segundo plano activada",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        actualizarEstadoSwitchUbicacion()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ajustes_conductor)
 
         val switchAuto = findViewById<SwitchCompat>(R.id.switchAutoAccept)
+        val switchUbicacionFondo = findViewById<SwitchCompat>(R.id.switchUbicacionFondo)
+        val tvEstadoUbicacionFondo = findViewById<TextView>(R.id.tvEstadoUbicacionFondo)
         val btnBack = findViewById<ImageButton>(R.id.btnBackAjustes)
         val btnCambiarPass = findViewById<Button>(R.id.btnCambiarPass)
         val btnSoporte = findViewById<Button>(R.id.btnSoporteConductor)
@@ -38,6 +62,19 @@ class AjustesConductor : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+
+        switchUbicacionFondo.setOnCheckedChangeListener { _, isChecked ->
+            if (actualizandoEstado) return@setOnCheckedChangeListener
+
+            if (isChecked) {
+                // Vuelve a mostrar el aviso destacado y pide el permiso.
+                permisoUbicacionFondo.iniciar()
+            } else {
+                revocarUbicacionFondo()
+            }
+        }
+
+        actualizarEstadoSwitchUbicacion()
 
         btnCambiarPass.setOnClickListener {
             startActivity(Intent(this, SeguridadContraseña::class.java))
@@ -54,6 +91,55 @@ class AjustesConductor : AppCompatActivity() {
         btnBack.setOnClickListener {
             finish()
         }
+    }
+
+    /**
+     * Refleja el estado real del consentimiento y del permiso del sistema.
+     */
+    private fun actualizarEstadoSwitchUbicacion() {
+        val switch = findViewById<SwitchCompat>(R.id.switchUbicacionFondo)
+        val tvEstado = findViewById<TextView>(R.id.tvEstadoUbicacionFondo)
+
+        val consentido = PermisoUbicacionHelper.tieneConsentimiento(this)
+        val permisoSistema = permisoUbicacionFondo.tienePermisoFondo()
+
+        actualizandoEstado = true
+        switch.isChecked = consentido && permisoSistema
+        actualizandoEstado = false
+
+        tvEstado.text = when {
+            !consentido -> getString(R.string.ajustes_ubicacion_fondo_pendiente)
+            !permisoSistema -> getString(R.string.ajustes_ubicacion_fondo_denegado)
+            else -> getString(R.string.ajustes_ubicacion_fondo_activado)
+        }
+    }
+
+    /**
+     * Revoca el consentimiento del usuario: deja de compartirse la ubicacion
+     * en segundo plano y se abre los ajustes del sistema para que pueda
+     * revocar tambien el permiso del sistema operativo.
+     */
+    private fun revocarUbicacionFondo() {
+        PermisoUbicacionHelper.revocarConsentimiento(this)
+        LocationForegroundService.detener(this)
+
+        Toast.makeText(
+            this,
+            "Ubicación en segundo plano desactivada. Abriendo los ajustes de la app…",
+            Toast.LENGTH_LONG
+        ).show()
+
+        try {
+            startActivity(
+                Intent(
+                    android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.parse("package:$packageName")
+                )
+            )
+        } catch (_: Exception) {
+        }
+
+        actualizarEstadoSwitchUbicacion()
     }
 
     private fun abrirSoporte() {
@@ -126,6 +212,7 @@ class AjustesConductor : AppCompatActivity() {
 
     private fun limpiarSesion() {
         auth.signOut()
+        LocationForegroundService.detener(this)
         SessionManager.idUsuario = 0
         SessionManager.nombreUsuario = ""
         SessionManager.correoUsuario = ""

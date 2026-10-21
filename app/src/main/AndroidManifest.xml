@@ -16,7 +16,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!-- GPS en segundo plano (Android 10+) -->
+    <!-- Solo se solicita tras mostrar el aviso destacado y obtener el
+         consentimiento explicito del usuario (requisito Google Play). -->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <!-- Servicio en primer plano para el rastreo de la ubicacion en segundo plano -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 
     <!-- Vibración -->
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -119,6 +125,13 @@
         <activity android:name="com.taxisign.pro.Seguridad.SeguridadContraseña" android:exported="false" />
         <activity android:name="com.taxisign.pro.Seguridad.Soporte" android:exported="false" />
 
+        <!-- SERVICIO EN PRIMER PLANO: rastreo de ubicacion durante el viaje.
+             Requiere ACCESS_BACKGROUND_LOCATION, que solo se pide tras el
+             aviso destacado y el consentimiento explicito del usuario. -->
+        <service
+            android:name="com.taxisign.pro.Seguridad.LocationForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="location" />
     </application>
 
 </manifest>

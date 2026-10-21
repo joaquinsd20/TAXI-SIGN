@@ -52,6 +52,7 @@ TaxiSign conecta pasajeros y conductores en tiempo real usando Firebase y Google
 | RED | Volley 1.2.1 (endpoints REST legacy en PHP) |
 | QR | ZXing (`core` + `zxing-android-embedded`) |
 | Identidad | Google Sign-In (Play Services Auth) |
+| Ubicación en segundo plano | Foreground Service (`foregroundServiceType="location"`) + `ACCESS_BACKGROUND_LOCATION` |
 
 ---
 
@@ -77,7 +78,10 @@ TaxiSign/
 │       │   ├── Notificaciones/            # Notificaciones + vibracion/flash
 │       │   ├── Pasajero/                  # Flujo completo del pasajero
 │       │   ├── conductor/                 # Flujo completo del conductor
-│       │   └── Seguridad/                 # Contraseña y soporte
+│       │   └── Seguridad/                 # Contraseña, soporte y cumplimiento de permisos
+│       │       ├── PermisoUbicacionHelper.kt        # Aviso destacado + consentimiento
+│       │       ├── PermisoUbicacionFondoManager.kt  # Solicitud escalonada de permisos
+│       │       └── LocationForegroundService.kt     # Servicio en primer plano (ubicación)
 │       └── res/
 │           ├── layout/           # Layouts XML
 │           ├── drawable/         # Recursos gráficos + imágenes de señas
@@ -208,10 +212,62 @@ signingConfigs {
 
 ---
 
+## 📍 Cumplimiento de Google Play — Aviso destacado y consentimiento
+
+La app solicita `ACCESS_BACKGROUND_LOCATION` para que el pasajero pueda ver la posición del conductor
+en tiempo real aunque la app esté en segundo plano o la pantalla bloqueada. Play Console exige
+**un aviso destacado (prominent disclosure) + consentimiento explícito** antes de pedir ese permiso.
+
+### Cómo está implementado
+
+| Pieza | Archivo | Función |
+|---|---|---|
+| Aviso destacado (UI) | `res/layout/dialog_aviso_ubicacion_fondo.xml` | Pantalla completa, no cancelable, con *qué* se recopila, *por qué*, *cómo se usa* y *tus controles*. |
+| Consentimiento | `Seguridad/PermisoUbicacionHelper.kt` | Persiste la decisión en `SharedPreferences` y permite revocarla. |
+| Solicitud escalonada | `Seguridad/PermisoUbicacionFondoManager.kt` | Orden exigido por Android 11+: `ACCESS_FINE_LOCATION` → `ACCESS_BACKGROUND_LOCATION` en una segunda solicitud. El permiso de segundo plano **solo** se pide si el usuario aceptó el aviso. |
+| Servicio en primer plano | `Seguridad/LocationForegroundService.kt` | `foregroundServiceType="location"` con notificación permanente obligatoria mientras se comparte la ubicación. |
+
+**Puntos clave para pasar la revisión:**
+
+1. El aviso destacado aparece **antes** de cualquier diálogo del sistema, y no se puede cerrar con
+   «Atrás» ni tocando fuera.
+2. Si el usuario lo rechaza, la app **sigue funcionando con normalidad** (solo se desactiva el
+   rastreo en segundo plano). Esto es un requisito explícito de Play.
+3. El usuario puede **revocar** el consentimiento en *Configuración → Ubicación en segundo plano*
+   (interruptor) y revocar el permiso del sistema en los ajustes de Android.
+4. Mientras la ubicación se recopila, hay una **notificación persistente** del servicio en primer plano.
+
+### Dónde se activa
+
+El flujo se pide al conductor en los momentos en que su posición debe seguir siendo visible:
+
+| Pantalla | Cuándo |
+|---|---|
+| `PanelConductorActivity` | Al conectar el turno (*INICIAR TURNO*). |
+| `IrHaciaPasajero` | Al ir a recoger al pasajero. |
+| `DuranteViajeConductor` | Durante el viaje. |
+
+El pasajero **no** necesita ubicación en segundo plano: solo la usa mientras la app está visible.
+
+### Formulario de Datos de Usuario (Data Safety)
+
+Respuestas a declarar en Play Console:
+
+- **¿Recopila datos de ubicación?** → **Sí**.
+- **Tipo**: Ubicación precisa (`ACCESS_FINE_LOCATION`) → **Sí**; Ubicación aproximada → **Sí**.
+- **¿Se comparte con terceros?** → **Sí** → se comparte con **el pasajero que tiene asignado el viaje**
+  (compartido en tiempo real dentro de la app). No se vende ni se usa con fines publicitarios.
+- **Es opcional**: **Sí** → el usuario puede rechazarlo sin perder funcionalidad.
+- **No se recoge historial de ubicación** fuera de los turnos/viajes activos.
+
+---
+
 ## 🛡️ Seguridad
 
 - Las **claves de firma** (`*.jks`), los **AAB/APK** compilados y `local.properties` están excluidos por `.gitignore`.
 - `app/google-services.json` y la API key de Maps incluidos son **de ejemplo**: reemplázalos por los tuyos y restringe la key por aplicación y SHA-1.
+- La contraseña del keystore está escrita en `app/build.gradle.kts`: muévela a `local.properties`
+  o a variables de entorno antes de publicar el repositorio.
 - Nunca subas credenciales al repositorio.
 
 ---

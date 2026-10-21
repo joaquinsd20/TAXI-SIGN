@@ -27,6 +27,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.firebase.database.*
 import com.taxisign.pro.R
+import com.taxisign.pro.Seguridad.LocationForegroundService
+import com.taxisign.pro.Seguridad.PermisoUbicacionFondoManager
 
 
 class DuranteViajeConductor : AppCompatActivity(), OnMapReadyCallback {
@@ -60,6 +62,16 @@ class DuranteViajeConductor : AppCompatActivity(), OnMapReadyCallback {
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 2002
+    }
+
+    /**
+     * Aviso destacado + consentimiento + permiso de ubicacion en segundo plano.
+     * Mantiene tu posicion visible para el pasajero durante todo el viaje.
+     */
+    private val permisoUbicacionFondo = PermisoUbicacionFondoManager(this) { concedido ->
+        if (concedido) {
+            iniciarServicioUbicacionFondo()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -138,6 +150,9 @@ class DuranteViajeConductor : AppCompatActivity(), OnMapReadyCallback {
         configurarRequestGps()
         conectarConViajeFirebase()
 
+        // El pasajero te sigue en el mapa durante todo el viaje.
+        permisoUbicacionFondo.iniciar()
+
         // Mensaje amigable de inicio de viaje para el pasajero
         if (viajeId.isNotEmpty()) {
             com.taxisign.pro.notificaciones.NotificacionHelper.enviarAViaje(
@@ -148,6 +163,20 @@ class DuranteViajeConductor : AppCompatActivity(), OnMapReadyCallback {
                 mensaje = "Relájate y disfruta el viaje. Cualquier cosa, usa el chat 💬"
             )
         }
+    }
+
+    /** Inicia el servicio en primer plano que comparte la ubicacion del viaje. */
+    private fun iniciarServicioUbicacionFondo() {
+        if (viajeId.isEmpty()) return
+
+        val uid = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid ?: ""
+
+        LocationForegroundService.iniciar(
+            this,
+            "viajes/$viajeId/ubicacionConductor",
+            uid,
+            LocationForegroundService.MODO_VIAJE
+        )
     }
 
     private fun registrarGananciaYNotificar() {
@@ -618,6 +647,10 @@ class DuranteViajeConductor : AppCompatActivity(), OnMapReadyCallback {
                         ).show()
 
                         registrarGananciaYNotificar()
+
+                        // El viaje termino: deja de compartirse la ubicacion.
+                        LocationForegroundService.detener(this)
+
                         abrirViajeFinalizadoConductor()
                     }
                     .addOnFailureListener { error ->

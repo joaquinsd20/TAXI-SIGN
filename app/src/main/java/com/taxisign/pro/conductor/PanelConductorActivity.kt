@@ -20,6 +20,8 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.taxisign.pro.R
+import com.taxisign.pro.Seguridad.LocationForegroundService
+import com.taxisign.pro.Seguridad.PermisoUbicacionFondoManager
 import com.taxisign.pro.SessionManager
 import com.taxisign.pro.Seguridad.Soporte
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -60,6 +62,23 @@ class PanelConductorActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val mAuth = FirebaseAuth.getInstance()
     private val mDatabase = FirebaseDatabase.getInstance().reference
+
+    /**
+     * Aviso destacado + consentimiento + permiso de ubicacion en segundo plano.
+     * Se registra como campo para que el launcher de permisos quede registrado
+     * antes de que la Activity llegue a STARTED (patron de AndroidX).
+     */
+    private val permisoUbicacionFondo = PermisoUbicacionFondoManager(this) { concedido ->
+        if (concedido) {
+            iniciarServicioUbicacionFondo()
+        } else {
+            Toast.makeText(
+                this,
+                "Seguimiento en segundo plano desactivado. Activalo en Configuración si lo necesitas.",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -146,6 +165,10 @@ class PanelConductorActivity : AppCompatActivity(), OnMapReadyCallback {
         // Empezar a rastrear GPS de forma continua
         iniciarRastreoGps()
 
+        // Aviso destacado + permiso de ubicacion en segundo plano para que el
+        // pasajero siga viendo tu posicion aunque salgas de la app.
+        permisoUbicacionFondo.iniciar()
+
         // CORREGIDO: Redirigir de inmediato a la pantalla del Radar de Viajes Activo (BuscarPasajero)
         val intent = Intent(this, BuscarPasajero::class.java)
         startActivity(intent)
@@ -162,7 +185,20 @@ class PanelConductorActivity : AppCompatActivity(), OnMapReadyCallback {
         Toast.makeText(this, "Has salido de línea", Toast.LENGTH_SHORT).show()
 
         detenerRastreoGps()
+        LocationForegroundService.detener(this)
         removerConductorDisponible()
+    }
+
+    /** Inicia el servicio en primer plano que comparte la ubicacion en segundo plano. */
+    private fun iniciarServicioUbicacionFondo() {
+        val uid = mAuth.currentUser?.uid ?: return
+
+        LocationForegroundService.iniciar(
+            this,
+            "conductores_disponibles/$uid",
+            uid,
+            LocationForegroundService.MODO_DISPONIBLE
+        )
     }
 
     private fun subirUbicacionAFirebase(location: Location) {
@@ -371,6 +407,9 @@ class PanelConductorActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onDestroy() {
         super.onDestroy()
+        if (isOnline) {
+            LocationForegroundService.detener(this)
+        }
         removerConductorDisponible()
         com.taxisign.pro.notificaciones.NotificacionHelper.dejarDeEscuchar(
             notiUid, notiListener

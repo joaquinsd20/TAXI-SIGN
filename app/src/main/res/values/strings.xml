@@ -94,4 +94,39 @@
     <!-- Google API Key -->
     <string name="google_maps_key">AIzaSyBXZDPoloKmzL9k0tDLBjfQ37hZ2kh87JE</string>
 
+    <!-- Aviso destacado de ubicacion en segundo plano (requisito Play Console) -->
+    <string name="aviso_ubicacion_fondo_icono_desc">Icono de ubicacion en segundo plano</string>
+    <string name="aviso_ubicacion_fondo_titulo">Ubicación en segundo plano</string>
+    <string name="aviso_ubicacion_fondo_subtitulo">AVISO DESTACADO ANTES DE ACTIVAR EL PERMISO</string>
+    <string name="aviso_ubicacion_fondo_intro">TaxiSign necesita tu permiso de ubicación en segundo plano. Antes de activarlo, te explicamos con claridad qué recopilamos y por qué.</string>
+
+    <string name="aviso_ubicacion_fondo_que">QUÉ RECOPILAMOS</string>
+    <string name="aviso_ubicacion_fondo_que_detalle">Las coordenadas GPS de tu dispositivo (latitud y longitud) mientras conduces. No recopilamos tu historial de ubicaciones fuera de tus turnos, ni datos de contactos, mensajes, fotos ni ubicación de tu vivienda.</string>
+
+    <string name="aviso_ubicacion_fondo_por_que">POR QUÉ LA NECESITAMOS</string>
+    <string name="aviso_ubicacion_fondo_por_que_detalle">Para que el pasajero pueda ver en el mapa dónde estás en tiempo real mientras dura el viaje, incluso si bloqueas la pantalla o sales de la aplicación. Sin este permiso el pasajero vería un taxi detenido y no podríaeguírtelo ni contactarte con precisión.</string>
+
+    <string name="aviso_ubicacion_fondo_como">CÓMO LA USAMOS</string>
+    <string name="aviso_ubicacion_fondo_como_detalle">Solo durante tu turno y tus viajes. Se activa cuando te conectas como conductor y se desactiva automáticamente al finalizar el viaje. Verás una notificación permanente mientras esté activo para que siempre sepas que se está compartiendo tu ubicación.</string>
+
+    <string name="aviso_ubicacion_fondo_controls">TUS CONTROLES</string>
+    <string name="aviso_ubicacion_fondo_controls_detalle">Puedes desactivar este permiso en cualquier momento desde Configuración → Ubicación en segundo plano, o desde los ajustes de tu teléfono. Si lo rechazas, la app sigue funcionando con normalidad y simplemente no se compartirá tu ubicación en segundo plano.</string>
+
+    <string name="aviso_ubicacion_fondo_politica">Lee nuestra Política de privacidad</string>
+    <string name="aviso_ubicacion_fondo_aceptar">Aceptar y continuar</string>
+    <string name="aviso_ubicacion_fondo_rechazar">Ahora no</string>
+    <string name="aviso_ubicacion_fondo_obligatorio">Puedes rechazar este permiso. La aplicación seguirá funcionando con normalidad.</string>
+
+    <!-- Aviso destacado de ubicacion en segundo plano: notificaciones -->
+    <string name="fgs_ubicacion_titulo">TaxiSign está compartiendo tu ubicación</string>
+    <string name="fgs_ubicacion_mensaje">Tu ubicación se comparte con el pasajero mientras dura el viaje. Toca para ver los detalles.</string>
+    <string name="fgs_ubicacion_canal">Ubicación de viaje</string>
+
+    <!-- Ajustes: ubicacion en segundo plano -->
+    <string name="ajustes_ubicacion_fondo_titulo">Ubicación en segundo plano</string>
+    <string name="ajustes_ubicacion_fondo_descripcion">Compartir tu ubicación durante los viajes aunque la app esté en segundo plano</string>
+    <string name="ajustes_ubicacion_fondo_activado">Permiso activado y aceptado por ti</string>
+    <string name="ajustes_ubicacion_fondo_pendiente">Aún no has aceptado el aviso destacado</string>
+    <string name="ajustes_ubicacion_fondo_denegado">Aceptaste el aviso, pero denegaste el permiso del sistema</string>
+
 </resources>

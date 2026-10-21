@@ -24,8 +24,11 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.taxisign.pro.R
+import com.taxisign.pro.Seguridad.LocationForegroundService
+import com.taxisign.pro.Seguridad.PermisoUbicacionFondoManager
 
 class IrHaciaPasajero : AppCompatActivity(), OnMapReadyCallback {
 
@@ -54,6 +57,16 @@ class IrHaciaPasajero : AppCompatActivity(), OnMapReadyCallback {
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 2001
+    }
+
+    /**
+     * Aviso destacado + consentimiento + permiso de ubicacion en segundo plano.
+     * El pasajero necesita ver tu posicion aunque bloquees la pantalla.
+     */
+    private val permisoUbicacionFondo = PermisoUbicacionFondoManager(this) { concedido ->
+        if (concedido) {
+            iniciarServicioUbicacionFondo()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -152,6 +165,29 @@ class IrHaciaPasajero : AppCompatActivity(), OnMapReadyCallback {
         }
 
         escucharCancelacionPasajero()
+
+        // El pasajero te sigue en el mapa: pedimos el permiso en segundo plano
+        // (con aviso destacado previo) para que no se corte el rastreo.
+        permisoUbicacionFondo.iniciar()
+    }
+
+    /** Inicia el servicio en primer plano que comparte la ubicacion del viaje. */
+    private fun iniciarServicioUbicacionFondo() {
+        if (viajeId.isEmpty()) return
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+
+        // Deja de aparecer como "disponible" mientras atiende este viaje.
+        if (uid.isNotEmpty()) {
+            mDatabase.child("conductores_disponibles").child(uid).removeValue()
+        }
+
+        LocationForegroundService.iniciar(
+            this,
+            "viajes/$viajeId/ubicacionConductor",
+            uid,
+            LocationForegroundService.MODO_VIAJE
+        )
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
