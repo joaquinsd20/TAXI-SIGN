@@ -27,6 +27,10 @@
     <!-- Vibración -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Camara: solo la usa el conductor para escanear el QR de seguridad
+         del pasajero al iniciar el viaje (zxing-android-embedded). Las fotos
+         de perfil y los documentos se eligen con el selector del sistema. -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -38,7 +42,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TaxiSign"
-        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <!-- GOOGLE MAPS API -->

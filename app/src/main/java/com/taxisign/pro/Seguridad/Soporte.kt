@@ -25,5 +25,19 @@ class Soporte : AppCompatActivity() {
         findViewById<ImageButton>(R.id.btnBackSoporte).setOnClickListener {
             finish()
         }
+
+        // Enlace a la política de privacidad publicada en GitHub Pages.
+        findViewById<CardView>(R.id.btnPoliticaPrivacidad).setOnClickListener {
+            try {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(PermisoUbicacionHelper.URL_POLITICA_PRIVACIDAD)
+                    )
+                )
+            } catch (_: Exception) {
+                // Si no hay navegador no se interrumpe el flujo.
+            }
+        }
     }
 }

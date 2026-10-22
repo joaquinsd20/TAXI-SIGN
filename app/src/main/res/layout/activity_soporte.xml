@@ -58,6 +58,7 @@
         android:id="@+id/btnChatSoporte"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         app:cardBackgroundColor="#151B31"
         app:cardCornerRadius="20dp">
         <LinearLayout
@@ -68,6 +69,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="💬 Chatear con un asesor"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btnPoliticaPrivacidad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="#151B31"
+        app:cardCornerRadius="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🔒 Política de privacidad"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"/>
         </LinearLayout>

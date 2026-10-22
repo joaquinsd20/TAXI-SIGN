@@ -101,15 +101,16 @@
     <tr><td>Contraseña</td><td>Se almacena de forma cifrada y nunca en texto legible.</td></tr>
     <tr><td>Tipo de usuario (pasajero / conductor)</td><td>Determinar el flujo y las funciones disponibles.</td></tr>
     <tr><td>Tipo de discapacidad o método de comunicación</td><td>Adaptar la interfaz y habilitar las funciones de accesibilidad (por ejemplo, el chat de señas).</td></tr>
+    <tr><td>Correo, nombre y foto de tu cuenta de Google</td><td>Solo si eliges iniciar sesión con Google. Se usan para crear y vincular tu cuenta de TaxiSign; no se guardan tokens de Google.</td></tr>
   </table>
 
   <h3>2.2 Datos del conductor</h3>
   <table>
     <tr><th>Dato</th><th>Para qué se usa</th></tr>
     <tr><td>DNI y teléfono</td><td>Verificación de identidad, contacto durante el viaje y cumplimiento normativo del servicio de transporte.</td></tr>
-    <tr><td>Documentos de habilitación</td><td>Validar que el conductor cuenta con los permisos exigidos para operar. <span class="tag opt">Opcional</span></td></tr>
+    <tr><td>Documentos de habilitación</td><td>Validar que el conductor cuenta con los permisos exigidos para operar. La App pide <strong>brevete (licencia de conducir), SOAT (seguro obligatorio) y certificado de antecedentes</strong>, y los almacena cifrados en tránsito en la base de datos de Firebase. <span class="tag opt">Opcional</span></td></tr>
     <tr><td>Datos del vehículo (matrícula, marca, modelo, color)</td><td>Identificar el vehículo asignado al pasajero.</td></tr>
-    <tr><td>Foto de perfil</td><td>Mostrar la imagen del conductor al pasajero.</td></tr>
+    <tr><td>Foto de perfil</td><td>Mostrar la imagen del conductor al pasajero. La foto se elige con el selector de archivos de tu propio dispositivo; no se captura con la cámara.</td></tr>
   </table>
 
   <h3>2.3 Datos de ubicación</h3>
@@ -138,11 +139,27 @@
     </p>
   </div>
 
-  <h3>2.4 Datos generados durante el uso</h3>
+  <h3>2.4 Lugares guardados y búsquedas recientes</h3>
+  <div class="card">
+    <p>
+      Si guardas un lugar con la función <strong>«Mis lugares»</strong> (Casa, Trabajo/Colegio/Universidad
+      y lugares frecuentes), la App almacena la <strong>dirección y las coordenadas</strong> de ese
+      lugar en tu cuenta de Firebase, asociada únicamente a tu identificador de usuario.
+    </p>
+    <p>
+      La App también registra los <strong>destinos que has buscado</strong> en el buscador para
+      ordenarte las sugerencias la próxima vez. Puedes borrar cualquier lugar guardado y eliminar
+      los recientes en cualquier momento.
+    </p>
+  </div>
+
+  <h3>2.5 Datos generados durante el uso</h3>
   <table>
     <tr><th>Dato</th><th>Para qué se usa</th></tr>
     <tr><td>Historial de viajes (origen, destino, hora, tarifa, calificaciones)</td><td>Permitir consultar viajes anteriores, calcular las ganancias del conductor y mostrar reseñas.</td></tr>
     <tr><td>Mensajes del chat</td><td>Permitir la comunicación entre pasajero y conductor durante el viaje. No se comparten con terceros ni se usan con fines publicitarios.</td></tr>
+    <tr><td>Imágenes de las señas</td><td>El chat de señas <strong>no captura ni almacena imágenes</strong>: traduce el texto a imágenes de dactilología incluidas dentro de la propia App.</td></tr>
+    <tr><td>Escaneo del QR de seguridad (cámara)</td><td>Al iniciar el viaje, el conductor puede escanear con la cámara el código QR que muestra el pasajero. La cámara <strong>solo se activa mientras el conductor pulsa «Escanear»</strong>, no graba vídeo ni guarda ninguna foto: únicamente lee el código para confirmar el abordaje. El conductor también puede introducir el código manualmente, sin usar la cámara. El pasajero nunca usa la cámara.</td></tr>
     <tr><td>Código de seguridad del viaje (QR)</td><td>Confirmar que el pasajero se ha subido al vehículo antes de iniciar el trayecto.</td></tr>
   </table>
 
@@ -154,10 +171,12 @@
       las calificaciones del conductor. <span class="tag yes">Compartido</span>
     </li>
     <li>
-      <strong>Con proveedores de infraestructura.</strong> Firebase (autenticación, base de datos
-      en tiempo real y almacenamiento) y Google Maps / Google Places (mapas, geocodificación y
+      <strong>Con proveedores de infraestructura.</strong> Firebase (autenticación de cuentas y
+      base de datos en tiempo real, en la que se almacenan los perfiles, los viajes, los mensajes
+      y los documentos de habilitación) y Google Maps / Google Places (mapas, geocodificación y
       cálculo de rutas), que actúan como encargados del tratamiento conforme a sus propias
-      políticas de privacidad.
+      políticas de privacidad. <strong>Todas las comunicaciones con estos servicios se realizan
+      mediante HTTPS (conexión cifrada).</strong>
     </li>
   </ul>
   <p>
@@ -168,7 +187,7 @@
   <h2>4. Base legal del tratamiento</h2>
   <ul>
     <li><strong>Ejecución del contrato:</strong> los datos imprescindibles para prestar el servicio de transporte.</li>
-    <li><strong>Consentimiento:</strong> la ubicación en segundo plano, la cámara para el chat de señas y las notificaciones.</li>
+    <li><strong>Consentimiento:</strong> la ubicación en segundo plano, el acceso a la cámara para escanear el QR de seguridad y el envío de notificaciones.</li>
     <li><strong>Interés legítimo:</strong> la seguridad, la prevención de fraude y la resolución de incidencias.</li>
     <li><strong>Obligación legal:</strong> cuando exista una norma aplicable (por ejemplo, conservación de datos identificativos del conductor).</li>
   </ul>
@@ -195,9 +214,10 @@
   <h2>7. Seguridad</h2>
   <p>
     Aplicamos medidas técnicas y organizativas razonables: cifrado de las contraseñas, comunicaciones
-    con los servidores de Firebase, control de acceso por roles (pasajero / conductor) y
-    verificación mediante código QR al inicio de cada viaje. Ningún sistema es infalible, pero
-    estas medidas reducen el riesgo.
+    <strong>siempre cifradas mediante HTTPS</strong> con los servidores de Firebase y Google Maps,
+    control de acceso por roles (pasajero / conductor) y verificación mediante código QR al inicio
+    de cada viaje. La App <strong>no admite tráfico sin cifrar</strong>: no está habilitado el
+    acceso por HTTP. Ningún sistema es infalible, pero estas medidas reducen el riesgo.
   </p>
 
   <h2>8. Menores de edad</h2>
