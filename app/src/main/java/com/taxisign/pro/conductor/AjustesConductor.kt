@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.taxisign.pro.Login.LoginActivity
 import com.taxisign.pro.R
 import com.taxisign.pro.Seguridad.LocationForegroundService
 import com.taxisign.pro.Seguridad.PermisoUbicacionFondoManager
@@ -54,6 +53,10 @@ class AjustesConductor : AppCompatActivity() {
         val btnCambiarPass = findViewById<Button>(R.id.btnCambiarPass)
         val btnSoporte = findViewById<Button>(R.id.btnSoporteConductor)
         val btnEliminarCuenta = findViewById<Button>(R.id.btnEliminarCuentaConductor)
+
+        findViewById<Button>(R.id.btnPoliticaConductor).setOnClickListener {
+            com.taxisign.pro.Seguridad.PoliticaPrivacidad.abrir(this)
+        }
 
         switchAuto.setOnCheckedChangeListener { _, isChecked ->
             Toast.makeText(
@@ -219,11 +222,12 @@ class AjustesConductor : AppCompatActivity() {
         SessionManager.telefonoUsuario = ""
         SessionManager.dniUsuario = ""
         SessionManager.tipoDiscapacidadUsuario = ""
-        SessionManager.rolUsuario = ""
+        SessionManager.borrarRol(this)
     }
 
+    /** Vuelve a la pantalla de inicio para elegir de nuevo Pasajero o Conductor. */
     private fun irLogin() {
-        val intent = Intent(this, LoginActivity::class.java).apply {
+        val intent = Intent(this, com.taxisign.pro.MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)

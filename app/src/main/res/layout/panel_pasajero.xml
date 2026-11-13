@@ -29,10 +29,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <View
+        <ImageView
             android:layout_width="42dp"
             android:layout_height="42dp"
-            android:background="@drawable/bg_circle_surface"/>
+            android:background="@drawable/bg_circle_surface"
+            android:padding="9dp"
+            android:src="@drawable/ic_person"
+            android:importantForAccessibility="no"
+            app:tint="#FFCE3A"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -50,51 +54,58 @@
 
             <TextView
                 android:id="@+id/txtUsuario"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pasajero"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnCiudadActual"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:background="@drawable/bg_chip_ciudad"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:layout_marginEnd="10dp">
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_location_pin"
-                app:tint="#FFCE3A"/>
-
-            <TextView
-                android:id="@+id/txtCiudadActual"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:text="Ciudad"
-                android:textColor="#FFFFFF"
-                android:textSize="13sp"
                 android:textStyle="bold"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:maxWidth="90dp"/>
+                android:maxLines="2"
+                android:breakStrategy="balanced"/>
+
+            <!-- Ciudad: debajo del nombre para que no choquen -->
+            <LinearLayout
+                android:id="@+id/btnCiudadActual"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="6dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_chip_ciudad"
+                android:paddingStart="10dp"
+                android:paddingEnd="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Cambiar ciudad">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_location_pin"
+                    android:importantForAccessibility="no"
+                    app:tint="#FFCE3A"/>
+
+                <TextView
+                    android:id="@+id/txtCiudadActual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="Ciudad"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:maxLines="1"/>
+            </LinearLayout>
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/btn_menu"
+            android:layout_marginStart="10dp"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@drawable/bg_circle_surface"
             android:src="@drawable/ic_menu"
+            android:contentDescription="Menú"
             android:scaleType="centerInside"
             android:padding="12dp"
             app:tint="#FFCE3A"/>
@@ -109,6 +120,7 @@
         android:layout_marginBottom="18dp"
         android:background="@drawable/bg_circle_surface"
         android:src="@drawable/ic_location"
+        android:contentDescription="Centrar el mapa en mi ubicación"
         android:scaleType="centerInside"
         android:padding="13dp"
         android:elevation="6dp"
@@ -152,6 +164,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_search"
+                android:importantForAccessibility="no"
                 app:tint="#FFCE3A"/>
 
             <TextView
@@ -191,6 +204,7 @@
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:src="@drawable/ic_home"
+                    android:importantForAccessibility="no"
                     app:tint="#FFCE3A"/>
 
                 <LinearLayout
@@ -211,8 +225,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ir ahora"
-                        android:textColor="#9AA3B8"
-                        android:textSize="12sp"/>
+                        android:textColor="#C7CDDC"
+                        android:textSize="13sp"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -232,6 +246,7 @@
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:src="@drawable/ic_work"
+                    android:importantForAccessibility="no"
                     app:tint="#FFCE3A"/>
 
                 <LinearLayout
@@ -252,8 +267,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ir ahora"
-                        android:textColor="#9AA3B8"
-                        android:textSize="12sp"/>
+                        android:textColor="#C7CDDC"
+                        android:textSize="13sp"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -274,6 +289,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_location_pin"
+                android:importantForAccessibility="no"
                 app:tint="#FFCE3A"/>
 
             <TextView
@@ -289,6 +305,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/ic_arrow_right"
+                android:importantForAccessibility="no"
                 app:tint="#9AA3B8"/>
         </LinearLayout>
 
@@ -307,6 +324,7 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:src="@drawable/ic_taxi"
+                android:importantForAccessibility="no"
                 app:tint="#151B31"/>
 
             <TextView
@@ -342,6 +360,7 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:src="@drawable/ic_routes"
+                android:importantForAccessibility="no"
                 app:tint="#9AA3B8"/>
 
             <TextView
@@ -349,8 +368,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Viajes"
-                android:textColor="#9AA3B8"
-                android:textSize="12sp"/>
+                android:textColor="#C7CDDC"
+                android:textSize="13sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -365,6 +384,7 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:src="@drawable/ic_notifications"
+                android:importantForAccessibility="no"
                 app:tint="#9AA3B8"/>
 
             <TextView
@@ -372,8 +392,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Avisos"
-                android:textColor="#9AA3B8"
-                android:textSize="12sp"/>
+                android:textColor="#C7CDDC"
+                android:textSize="13sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -395,8 +415,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Perfil"
-                android:textColor="#9AA3B8"
-                android:textSize="12sp"/>
+                android:textColor="#C7CDDC"
+                android:textSize="13sp"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -425,6 +445,7 @@
                 android:layout_height="48dp"
                 android:background="@drawable/bg_circle_surface"
                 android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Cerrar búsqueda"
                 android:scaleType="centerInside"
                 android:padding="12dp"
                 app:tint="#FFFFFF"/>

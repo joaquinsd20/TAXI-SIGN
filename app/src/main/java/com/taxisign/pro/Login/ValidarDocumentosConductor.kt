@@ -14,7 +14,6 @@ import com.taxisign.pro.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.database.FirebaseDatabase
-import java.io.InputStream
 
 class ValidarDocumentosConductor : AppCompatActivity() {
 
@@ -96,9 +95,9 @@ class ValidarDocumentosConductor : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
-        btnSubirBrevete.setOnClickListener { selectBreveteLauncher.launch("*/*") }
-        btnSubirSoat.setOnClickListener { selectSoatLauncher.launch("*/*") }
-        btnSubirAntecedentes.setOnClickListener { selectAntecedentesLauncher.launch("*/*") }
+        btnSubirBrevete.setOnClickListener { selectBreveteLauncher.launch("image/*") }
+        btnSubirSoat.setOnClickListener { selectSoatLauncher.launch("image/*") }
+        btnSubirAntecedentes.setOnClickListener { selectAntecedentesLauncher.launch("image/*") }
 
         btnFinalizarRegistroConductor.setOnClickListener {
             if (uriBrevete != null && uriSoat != null && uriAntecedentes != null) {
@@ -169,19 +168,27 @@ class ValidarDocumentosConductor : AppCompatActivity() {
             )
             guardarDatosEnDatabase(uid, documentosMap)
         } else {
-            eliminarUsuarioCreado("Error crítico al procesar la codificación de tus documentos locales.")
+            eliminarUsuarioCreado("No se pudieron leer tus documentos. Usa fotos (JPG o PNG) de menos de 4 MB.")
         }
     }
 
+    /**
+     * Convierte la foto del documento a Base64. Rechaza archivos de mas de
+     * MAX_BYTES_DOCUMENTO para evitar OutOfMemoryError y nodos enormes en
+     * Realtime Database.
+     */
     private fun convertirUriABase64(uri: Uri): String? {
         return try {
-            val inputStream: InputStream? = contentResolver.openInputStream(uri)
-            val bytes = inputStream?.readBytes()
-            inputStream?.close()
-            if (bytes != null) {
-                Base64.encodeToString(bytes, Base64.DEFAULT)
-            } else null
+            val tamano = contentResolver.query(uri, arrayOf(OpenableColumns.SIZE), null, null, null)
+                ?.use { c -> if (c.moveToFirst() && !c.isNull(0)) c.getLong(0) else -1L } ?: -1L
+            if (tamano > MAX_BYTES_DOCUMENTO) return null
+
+            val bytes = contentResolver.openInputStream(uri)?.use { it.readBytes() } ?: return null
+            if (bytes.size > MAX_BYTES_DOCUMENTO) return null
+            Base64.encodeToString(bytes, Base64.NO_WRAP)
         } catch (e: Exception) {
+            null
+        } catch (e: OutOfMemoryError) {
             null
         }
     }
@@ -271,5 +278,10 @@ class ValidarDocumentosConductor : AppCompatActivity() {
             }
         }
         return resultado ?: "Documento"
+    }
+
+    companion object {
+        /** Tamano maximo de cada foto de documento (4 MB). */
+        private const val MAX_BYTES_DOCUMENTO = 4L * 1024 * 1024
     }
 }

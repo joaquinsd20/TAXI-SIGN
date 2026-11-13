@@ -1,190 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#050816"
+    android:background="#020617"
+    android:orientation="vertical"
     tools:context=".notificaciones.NotificationsActivity">
 
-    <!-- HEADER CON TÍTULO Y BOTÓN LIMPIAR -->
+    <!-- ENCABEZADO -->
     <LinearLayout
         android:id="@+id/headerNotifications"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingHorizontal="20dp"
+        android:paddingTop="20dp">
 
-        <!-- Botón volver -->
         <ImageButton
             android:id="@+id/btnBackNotifications"
             android:layout_width="44dp"
             android:layout_height="44dp"
-            android:background="@drawable/bg_input_dark"
+            android:background="@drawable/bg_header_oscuro"
+            android:contentDescription="Volver"
             android:padding="12dp"
             android:src="@drawable/ic_arrow_back"
-            app:tint="#FFD600"
-            android:contentDescription="Volver" />
+            app:tint="#FFD600" />
 
-        <!-- Título -->
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
             android:layout_weight="1"
-            android:layout_marginStart="12dp"
             android:text="Notificaciones"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <!-- Botón marcar como leído -->
         <ImageButton
             android:id="@+id/btnMarkAllRead"
             android:layout_width="44dp"
             android:layout_height="44dp"
-            android:background="@drawable/bg_input_dark"
-            android:padding="10dp"
+            android:background="@drawable/bg_header_oscuro"
+            android:contentDescription="Marcar todas como leídas"
+            android:padding="11dp"
             android:src="@drawable/ic_check"
-            app:tint="#FFD600"
-            android:contentDescription="Marcar como leído" />
-
+            app:tint="#FFD600" />
     </LinearLayout>
 
-    <!-- TABS: TODAS / SIN LEER -->
+    <!-- PESTAÑAS -->
     <LinearLayout
         android:id="@+id/tabsContainer"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:background="#0A0F1B"
-        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/bg_tabs_segmentado"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerNotifications">
+        android:padding="4dp">
 
-        <!-- Tab: Todas -->
         <LinearLayout
             android:id="@+id/tabAll"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/bg_tab_activa"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tvTabAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Todas"
-                android:textColor="#FFD600"
+                android:textColor="#111827"
                 android:textSize="15sp"
                 android:textStyle="bold" />
-
-            <View
-                android:layout_width="40dp"
-                android:layout_height="2dp"
-                android:layout_marginTop="6dp"
-                android:background="#FFD600" />
         </LinearLayout>
 
-        <!-- Divisor -->
-        <View
-            android:layout_width="1dp"
-            android:layout_height="30dp"
-            android:background="#1A1F2E" />
-
-        <!-- Tab: Sin leer -->
         <LinearLayout
             android:id="@+id/tabUnread"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvTabUnread"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:text="Sin leer"
+                android:textColor="#9AA3B8"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sin leer"
-                    android:textColor="#9CA4C3"
-                    android:textSize="15sp" />
-
-                <!-- Badge de número de notificaciones sin leer -->
-                <View
-                    android:id="@+id/badgeUnreadCount"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="6dp"
-                    android:background="@drawable/bg_badge_red" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/badgeUnreadCount"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_badge_contador"
+                android:gravity="center"
+                android:minWidth="20dp"
+                android:paddingHorizontal="6dp"
+                android:text="0"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 
-    <!-- LISTA DE NOTIFICACIONES -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerNotifications"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="4dp"
-        android:paddingHorizontal="8dp"
-        android:paddingVertical="8dp"
-        android:clipToPadding="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tabsContainer"
-        tools:listitem="@layout/item_notification" />
-
-    <!-- ESTADO VACÍO -->
-    <LinearLayout
-        android:id="@+id/emptyState"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="32dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tabsContainer">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerNotifications"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="24dp"
+            tools:listitem="@layout/item_notification" />
+
+        <!-- ESTADO VACIO -->
+        <LinearLayout
+            android:id="@+id/emptyState"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="📬"
-            android:textSize="64sp"
-            android:layout_marginBottom="16dp" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:visibility="gone">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No hay notificaciones"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
+            <ImageView
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:background="@drawable/bg_circle_surface"
+                android:importantForAccessibility="no"
+                android:padding="24dp"
+                android:src="@drawable/ic_notifications"
+                app:tint="#FFD600" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Volveremos a contactarte cuando haya actualizaciones"
-            android:textColor="#9CA4C3"
-            android:textSize="14sp"
-            android:gravity="center" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvVacioTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Todo al día"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tvVacioMensaje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="Aquí verás los avisos de tus viajes y de seguridad."
+                android:textColor="#9AA3B8"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#020617"
     android:fillViewport="true"
-    android:background="@drawable/bg_taxi_neon"
     tools:context=".pasajero.PerfilPasajeroActivity">
 
     <LinearLayout
@@ -15,13 +14,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingStart="20dp"
+        android:paddingTop="20dp"
         android:paddingEnd="20dp"
-        android:paddingTop="18dp"
         android:paddingBottom="28dp">
 
+        <!-- ENCABEZADO -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -29,271 +29,359 @@
                 android:id="@+id/btn_back"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
-                android:background="@android:color/transparent"
-                android:padding="10dp"
-                android:src="@drawable/ic_arrow_right"
-                android:rotation="180"
-                app:tint="#FFD600"/>
+                android:background="@drawable/bg_header_oscuro"
+                android:contentDescription="Volver"
+                android:padding="12dp"
+                android:src="@drawable/ic_arrow_back"
+                app:tint="#FFD600" />
 
             <TextView
                 android:id="@+id/tvTitulo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="Completa tu perfil"
-                android:textColor="#FFD600"
-                android:textSize="22sp"
-                android:textStyle="bold"/>
-
-            <Space
-                android:layout_width="44dp"
-                android:layout_height="44dp"/>
+                android:text="Mi perfil"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
-        <TextView
+        <!-- TARJETA PRINCIPAL: foto, nombre, calificacion -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Para ofrecerte la mejor experiencia"
-            android:textColor="#FFFFFF"
-            android:gravity="center"
-            android:textSize="13sp"/>
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_card_viaje"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="18dp"
+            android:paddingVertical="24dp">
 
-        <LinearLayout
-            android:id="@+id/layoutProgreso"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_input_dark"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="14dp"
-            android:paddingEnd="14dp">
+            <FrameLayout
+                android:id="@+id/layoutFoto"
+                android:layout_width="116dp"
+                android:layout_height="116dp">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_person"
-                app:tint="#FFD600"/>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_perfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_foto_perfil"
+                    android:contentDescription="Foto de perfil"
+                    android:padding="28dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_person"
+                    app:shapeAppearanceOverlay="@style/TaxiSign.FotoCircular"
+                    app:strokeColor="#FFD600"
+                    app:strokeWidth="3dp"
+                    app:tint="#FFD600" />
+
+                <ImageButton
+                    android:id="@+id/btnEditarFoto"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/bg_boton_camara"
+                    android:contentDescription="Cambiar foto de perfil"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_camara"
+                    app:tint="#111827" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvNombreUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:text="Pasajero"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="12dp"
-                android:orientation="vertical">
-
-                <ProgressBar
-                    android:layout_width="match_parent"
-                    android:layout_height="7dp"
-                    android:progress="80"
-                    android:max="100"
-                    android:progressTint="#FFD600"
-                    style="?android:attr/progressBarStyleHorizontal"/>
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Perfil 80% completado"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp"/>
-            </LinearLayout>
+                    android:background="@drawable/bg_chip_rol"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="5dp"
+                    android:text="Pasajero"
+                    android:textColor="#C7CDDC"
+                    android:textSize="13sp" />
 
-            <TextView
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:gravity="center"
-                android:background="@drawable/bg_borde"
-                android:text="80%"
-                android:textColor="#FFD600"
-                android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/tvRatingPasajero"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_chip_rol"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="5dp"
+                    android:text="⭐ Sin calificaciones"
+                    android:textColor="#FFD600"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/layoutFoto"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="22dp">
-
-            <ImageView
-                android:id="@+id/iv_perfil"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_amarillo_circular"
-                android:padding="24dp"
-                android:src="@drawable/ic_person"
-                app:tint="#FFD600"/>
-
-            <ImageButton
-                android:id="@+id/btnEditarFoto"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="bottom|end"
-                android:background="@drawable/bg_amarillo_circular"
-                android:padding="10dp"
-                android:src="@drawable/ic_camara"
-                app:tint="#FFD600"/>
-        </FrameLayout>
-
         <TextView
-            android:id="@+id/tvNombreUsuario"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Usuario Logueado"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="10dp"
+            android:text="Datos personales"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/tvRatingPasajero"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="⭐ Sin calificaciones todavía"
-            android:textColor="#FFD600"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:gravity="center"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Pasajero"
-            android:textColor="#AAB1CB"
-            android:textSize="13sp"
-            android:gravity="center"/>
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
         <LinearLayout
-            android:id="@+id/cardInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_borde"
-            android:elevation="4dp"
+            android:background="@drawable/bg_card_viaje"
             android:orientation="vertical"
             android:padding="18dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="Nombre completo"
+                android:textColor="#9AA3B8"
+                android:textSize="13sp" />
 
             <EditText
                 android:id="@+id/et_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="56dp"
-                android:layout_marginBottom="10dp"
+                android:minHeight="54dp"
+                android:layout_marginBottom="14dp"
                 android:background="@drawable/bg_input_dark"
                 android:drawableStart="@drawable/ic_person"
-                android:drawablePadding="10dp"
-                android:hint="Nombre completo"
+                android:drawablePadding="12dp"
+                android:hint="Tu nombre y apellidos"
+                android:importantForAutofill="no"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
                 android:textColor="#FFFFFF"
-                android:textColorHint="#8F96B2"
-                android:textSize="14sp"
-                app:drawableTint="#FFD600"/>
+                android:textColorHint="#6B7491"
+                android:textSize="15sp"
+                android:inputType="textPersonName|textCapWords"
+                app:drawableTint="#FFD600" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="Correo electrónico"
+                android:textColor="#9AA3B8"
+                android:textSize="13sp" />
 
             <EditText
                 android:id="@+id/et_correo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="56dp"
-                android:layout_marginBottom="10dp"
+                android:minHeight="54dp"
+                android:layout_marginBottom="14dp"
                 android:background="@drawable/bg_input_dark"
                 android:drawableStart="@drawable/ic_email"
-                android:drawablePadding="10dp"
-                android:hint="Correo electrónico"
-                android:inputType="textEmailAddress"
+                android:drawablePadding="12dp"
+                android:hint="correo@ejemplo.com"
+                android:importantForAutofill="no"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
                 android:textColor="#FFFFFF"
-                android:textColorHint="#8F96B2"
-                android:textSize="14sp"
-                app:drawableTint="#FFD600"/>
+                android:textColorHint="#6B7491"
+                android:textSize="15sp"
+                android:inputType="textEmailAddress"
+                app:drawableTint="#FFD600" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="Teléfono"
+                android:textColor="#9AA3B8"
+                android:textSize="13sp" />
 
             <EditText
                 android:id="@+id/et_telefono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="56dp"
-                android:layout_marginBottom="10dp"
+                android:minHeight="54dp"
+                android:layout_marginBottom="14dp"
                 android:background="@drawable/bg_input_dark"
                 android:drawableStart="@drawable/ic_phone"
-                android:drawablePadding="10dp"
-                android:hint="Número de teléfono"
-                android:inputType="phone"
+                android:drawablePadding="12dp"
+                android:hint="987 654 321"
+                android:importantForAutofill="no"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
                 android:textColor="#FFFFFF"
-                android:textColorHint="#8F96B2"
-                android:textSize="14sp"
-                app:drawableTint="#FFD600"/>
+                android:textColorHint="#6B7491"
+                android:textSize="15sp"
+                android:inputType="phone"
+                app:drawableTint="#FFD600" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="DNI"
+                android:textColor="#9AA3B8"
+                android:textSize="13sp" />
 
             <EditText
                 android:id="@+id/et_dni"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="56dp"
-                android:layout_marginBottom="10dp"
+                android:minHeight="54dp"
                 android:background="@drawable/bg_input_dark"
                 android:drawableStart="@drawable/ic_id"
-                android:drawablePadding="10dp"
-                android:hint="DNI"
+                android:drawablePadding="12dp"
+                android:hint="8 dígitos"
+                android:importantForAutofill="no"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#6B7491"
+                android:textSize="15sp"
                 android:inputType="number"
                 android:maxLength="8"
-                android:paddingStart="14dp"
-                android:paddingEnd="14dp"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#8F96B2"
-                android:textSize="14sp"
                 app:drawableTint="#FFD600" />
+        </LinearLayout>
 
-            <EditText
-                android:id="@+id/et_tipo_discapacidad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="56dp"
-                android:background="@drawable/bg_input_dark"
-                android:drawableStart="@drawable/ic_person"
-                android:drawablePadding="10dp"
-                android:hint="Ej: Sordo, mudo, sordomudo"
-                android:paddingStart="14dp"
-                android:paddingEnd="14dp"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#8F96B2"
-                android:textSize="14sp"
-                app:drawableTint="#FFD600"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="10dp"
+            android:text="Accesibilidad"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_viaje"
+            android:orientation="vertical"
+            android:padding="18dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:text="Tu información está segura con nosotros."
-                android:textColor="#AAB1CB"
-                android:textSize="12sp"/>
+                android:layout_marginBottom="10dp"
+                android:text="¿Cómo te comunicas?"
+                android:textColor="#9AA3B8"
+                android:textSize="13sp" />
+
+            <RadioGroup
+                android:id="@+id/rgAccesibilidadPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rbPerfilSordo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="56dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_opcion_radio"
+                    android:buttonTint="#FFD600"
+                    android:paddingStart="10dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="8dp"
+                    android:text="Sordo\nNo escucho"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <RadioButton
+                    android:id="@+id/rbPerfilMudo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="56dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_opcion_radio"
+                    android:buttonTint="#FFD600"
+                    android:paddingStart="10dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="8dp"
+                    android:text="Mudo\nNo hablo"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <RadioButton
+                    android:id="@+id/rbPerfilSordomudo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="56dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_opcion_radio"
+                    android:buttonTint="#FFD600"
+                    android:paddingStart="10dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="8dp"
+                    android:text="Sordomudo\nNo escucho ni hablo"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <RadioButton
+                    android:id="@+id/rbPerfilNormal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="56dp"
+                    android:background="@drawable/bg_opcion_radio"
+                    android:buttonTint="#FFD600"
+                    android:paddingStart="10dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="8dp"
+                    android:text="Sin condición\nEscucho y hablo"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="🔒 Tus datos solo se usan para tus viajes y se guardan de forma segura."
+                android:textColor="#9AA3B8"
+                android:textSize="12sp" />
         </LinearLayout>
 
+        <!-- GUARDAR -->
         <LinearLayout
             android:id="@+id/btn_guardar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/bg_button_yellow"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CONTINUAR"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:text="Guardar cambios"
+                android:textColor="#111827"
+                android:textSize="17sp"
+                android:textStyle="bold" />
         </LinearLayout>
-
     </LinearLayout>
-
 </ScrollView>

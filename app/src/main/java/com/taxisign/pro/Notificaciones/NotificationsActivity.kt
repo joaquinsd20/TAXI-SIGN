@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -98,7 +99,28 @@ class NotificationsActivity : AppCompatActivity() {
         mostradas.clear()
         mostradas.addAll(if (soloNoLeidas) todas.filter { !it.leida } else todas)
         adapter.notifyDataSetChanged()
+        actualizarPestanas()
         mostrarVacio(mostradas.isEmpty())
+    }
+
+    /** Resalta la pestaña activa y muestra cuantos avisos faltan leer. */
+    private fun actualizarPestanas() {
+        val amarillo = R.drawable.bg_tab_activa
+        tabAll.setBackgroundResource(if (soloNoLeidas) 0 else amarillo)
+        tabUnread.setBackgroundResource(if (soloNoLeidas) amarillo else 0)
+        findViewById<TextView>(R.id.tvTabAll).setTextColor(
+            android.graphics.Color.parseColor(if (soloNoLeidas) "#9AA3B8" else "#111827")
+        )
+        findViewById<TextView>(R.id.tvTabUnread).setTextColor(
+            android.graphics.Color.parseColor(if (soloNoLeidas) "#111827" else "#9AA3B8")
+        )
+        val sinLeer = todas.count { !it.leida }
+        findViewById<TextView>(R.id.badgeUnreadCount).apply {
+            text = if (sinLeer > 99) "99+" else sinLeer.toString()
+            visibility = if (sinLeer > 0) View.VISIBLE else View.GONE
+        }
+        findViewById<TextView>(R.id.tvVacioTitulo).text =
+            if (soloNoLeidas) "No tienes avisos sin leer" else "Todo al día"
     }
 
     private fun mostrarVacio(vacio: Boolean) {

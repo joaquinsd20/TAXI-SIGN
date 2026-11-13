@@ -85,6 +85,11 @@ class PanelConductorActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.panel_conductor)
 
+        // Recuerda que esta sesion es de conductor (por ejemplo, despues de registrarse)
+        if (com.taxisign.pro.SessionManager.rolGuardado(this).isEmpty()) {
+            com.taxisign.pro.SessionManager.guardarRol(this, "CONDUCTOR")
+        }
+
         iniciarNotificaciones()
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)

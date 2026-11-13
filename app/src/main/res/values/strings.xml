@@ -96,21 +96,21 @@
 
     <!-- Aviso destacado de ubicacion en segundo plano (requisito Play Console) -->
     <string name="aviso_ubicacion_fondo_icono_desc">Icono de ubicacion en segundo plano</string>
-    <string name="aviso_ubicacion_fondo_titulo">Ubicación en segundo plano</string>
-    <string name="aviso_ubicacion_fondo_subtitulo">AVISO DESTACADO ANTES DE ACTIVAR EL PERMISO</string>
-    <string name="aviso_ubicacion_fondo_intro">TaxiSign necesita tu permiso de ubicación en segundo plano. Antes de activarlo, te explicamos con claridad qué recopilamos y por qué.</string>
+    <string name="aviso_ubicacion_fondo_titulo">Uso de tu ubicación</string>
+    <string name="aviso_ubicacion_fondo_subtitulo">ANTES DE ACTIVAR EL PERMISO DE UBICACIÓN</string>
+    <string name="aviso_ubicacion_fondo_intro">TaxiSign necesita tu permiso de ubicación mientras usas la app. Antes de activarlo, te explicamos con claridad qué recopilamos y por qué.</string>
 
     <string name="aviso_ubicacion_fondo_que">QUÉ RECOPILAMOS</string>
     <string name="aviso_ubicacion_fondo_que_detalle">Las coordenadas GPS de tu dispositivo (latitud y longitud) mientras conduces. No recopilamos tu historial de ubicaciones fuera de tus turnos, ni datos de contactos, mensajes, fotos ni ubicación de tu vivienda.</string>
 
     <string name="aviso_ubicacion_fondo_por_que">POR QUÉ LA NECESITAMOS</string>
-    <string name="aviso_ubicacion_fondo_por_que_detalle">Para que el pasajero pueda ver en el mapa dónde estás en tiempo real mientras dura el viaje, incluso si bloqueas la pantalla o sales de la aplicación. Sin este permiso el pasajero vería un taxi detenido y no podríaeguírtelo ni contactarte con precisión.</string>
+    <string name="aviso_ubicacion_fondo_por_que_detalle">Para que el pasajero pueda ver en el mapa dónde estás en tiempo real mientras dura el viaje, incluso si bloqueas la pantalla o sales de la aplicación. Sin este permiso el pasajero vería un taxi detenido y no podría seguirte ni contactarte con precisión.</string>
 
     <string name="aviso_ubicacion_fondo_como">CÓMO LA USAMOS</string>
     <string name="aviso_ubicacion_fondo_como_detalle">Solo durante tu turno y tus viajes. Se activa cuando te conectas como conductor y se desactiva automáticamente al finalizar el viaje. Verás una notificación permanente mientras esté activo para que siempre sepas que se está compartiendo tu ubicación.</string>
 
     <string name="aviso_ubicacion_fondo_controls">TUS CONTROLES</string>
-    <string name="aviso_ubicacion_fondo_controls_detalle">Puedes desactivar este permiso en cualquier momento desde Configuración → Ubicación en segundo plano, o desde los ajustes de tu teléfono. Si lo rechazas, la app sigue funcionando con normalidad y simplemente no se compartirá tu ubicación en segundo plano.</string>
+    <string name="aviso_ubicacion_fondo_controls_detalle">Puedes desactivar este permiso en cualquier momento desde Configuración o desde los ajustes de tu teléfono. Al desconectarte o finalizar el viaje se deja de compartir tu ubicación.</string>
 
     <string name="aviso_ubicacion_fondo_politica">Lee nuestra Política de privacidad</string>
     <string name="aviso_ubicacion_fondo_aceptar">Aceptar y continuar</string>
@@ -123,10 +123,25 @@
     <string name="fgs_ubicacion_canal">Ubicación de viaje</string>
 
     <!-- Ajustes: ubicacion en segundo plano -->
-    <string name="ajustes_ubicacion_fondo_titulo">Ubicación en segundo plano</string>
-    <string name="ajustes_ubicacion_fondo_descripcion">Compartir tu ubicación durante los viajes aunque la app esté en segundo plano</string>
+    <string name="ajustes_ubicacion_fondo_titulo">Compartir ubicación en viajes</string>
+    <string name="ajustes_ubicacion_fondo_descripcion">Compartir tu ubicación con el pasajero durante tus turnos y viajes</string>
     <string name="ajustes_ubicacion_fondo_activado">Permiso activado y aceptado por ti</string>
     <string name="ajustes_ubicacion_fondo_pendiente">Aún no has aceptado el aviso destacado</string>
     <string name="ajustes_ubicacion_fondo_denegado">Aceptaste el aviso, pero denegaste el permiso del sistema</string>
+
+    <!-- Politica de privacidad (visible en inicio y ajustes) -->
+    <string name="politica_privacidad">Política de privacidad</string>
+
+    <!-- Pantalla de inicio -->
+    <string name="app_nombre_visible">Taxi-Sign</string>
+    <string name="main_logo_desc">Logo de TaxiSign</string>
+    <string name="main_subtitulo">Comunicación sin barreras</string>
+    <string name="main_soy_pasajero">SOY PASAJERO</string>
+    <string name="main_pasajero_sub">Pedir un taxi ahora</string>
+    <string name="main_pasajero_desc">Soy pasajero: pedir un taxi</string>
+    <string name="main_soy_conductor">SOY CONDUCTOR</string>
+    <string name="main_conductor_sub">Empezar a trabajar</string>
+    <string name="main_conductor_desc">Soy conductor: empezar a trabajar</string>
+
 
 </resources>

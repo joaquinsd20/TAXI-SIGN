@@ -19,6 +19,18 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
+        // Sesion abierta: entra directo a su panel, sin mostrar la pantalla de inicio
+        val usuario = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
+        val rolGuardado = SessionManager.rolGuardado(this)
+        if (usuario != null && rolGuardado.isNotEmpty()) {
+            SessionManager.restaurar(this, usuario.uid)
+            irAPanel(
+                if (rolGuardado == "CONDUCTOR") com.taxisign.pro.conductor.PanelConductorActivity::class.java
+                else com.taxisign.pro.pasajero.PanelPasajeroActivity::class.java
+            )
+            return
+        }
+
         try {
 
             setContentView(R.layout.activity_main)
@@ -50,6 +62,11 @@ class MainActivity : AppCompatActivity() {
                 abrirLogin("CONDUCTOR")
             }
 
+            findViewById<android.widget.TextView>(R.id.tvPoliticaPrivacidadMain)
+                .setOnClickListener {
+                    com.taxisign.pro.Seguridad.PoliticaPrivacidad.abrir(this)
+                }
+
             // Si ya hay sesión activa, redirige al panel correspondiente
             verificarSesionActiva()
 
@@ -65,32 +82,67 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Si hay una sesion activa abre directamente el panel de su rol.
+     * Mientras se comprueba, los botones de rol se ocultan para que el usuario
+     * no abra el login de un rol y luego la app lo mande al panel del otro.
+     */
     private fun verificarSesionActiva() {
         val user = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser ?: return
         val uid = user.uid
         val db = com.google.firebase.database.FirebaseDatabase.getInstance().reference
+        val cardPasajero = findViewById<CardView>(R.id.cardPasajero)
+        val cardConductor = findViewById<CardView>(R.id.cardConductor)
 
-        db.child("usuarios").child("pasajeros").child(uid).get()
-            .addOnSuccessListener { sp ->
-                if (sp.exists()) {
-                    SessionManager.idUsuario = uid.hashCode()
-                    SessionManager.nombreUsuario = sp.child("nombre").value?.toString() ?: "Pasajero"
-                    SessionManager.correoUsuario = sp.child("email").value?.toString() ?: ""
-                    SessionManager.rolUsuario = "PASAJERO"
-                    irAPanel(com.taxisign.pro.pasajero.PanelPasajeroActivity::class.java)
-                } else {
-                    db.child("usuarios").child("conductores").child(uid).get()
-                        .addOnSuccessListener { sc ->
-                            if (sc.exists()) {
-                                SessionManager.idUsuario = uid.hashCode()
-                                SessionManager.nombreUsuario = sc.child("nombre").value?.toString() ?: "Conductor"
-                                SessionManager.correoUsuario = sc.child("email").value?.toString() ?: ""
-                                SessionManager.rolUsuario = "CONDUCTOR"
-                                irAPanel(com.taxisign.pro.conductor.PanelConductorActivity::class.java)
-                            }
-                        }
-                }
+        fun mostrarOpciones() {
+            cardPasajero.visibility = android.view.View.VISIBLE
+            cardConductor.visibility = android.view.View.VISIBLE
+        }
+        cardPasajero.visibility = android.view.View.INVISIBLE
+        cardConductor.visibility = android.view.View.INVISIBLE
+
+        fun entrar(snap: com.google.firebase.database.DataSnapshot, rol: String) {
+            SessionManager.idUsuario = uid.hashCode()
+            SessionManager.uidUsuario = uid
+            SessionManager.nombreUsuario = snap.child("nombre").value?.toString()
+                ?: if (rol == "CONDUCTOR") "Conductor" else "Pasajero"
+            SessionManager.correoUsuario = snap.child("email").value?.toString() ?: ""
+            SessionManager.guardarRol(this, rol)
+            irAPanel(
+                if (rol == "CONDUCTOR") com.taxisign.pro.conductor.PanelConductorActivity::class.java
+                else com.taxisign.pro.pasajero.PanelPasajeroActivity::class.java
+            )
+        }
+
+        // El rol con el que inicio sesion manda; si no hay (instalaciones antiguas)
+        // se busca primero como pasajero y luego como conductor.
+        val rolGuardado = SessionManager.rolGuardado(this)
+        val orden = when (rolGuardado) {
+            "CONDUCTOR" -> listOf("CONDUCTOR")
+            "PASAJERO" -> listOf("PASAJERO")
+            else -> listOf("PASAJERO", "CONDUCTOR")
+        }
+
+        fun probar(indice: Int) {
+            if (indice >= orden.size) {
+                // La cuenta no tiene perfil del rol esperado: se cierra y se elige de nuevo
+                com.google.firebase.auth.FirebaseAuth.getInstance().signOut()
+                SessionManager.borrarRol(this)
+                mostrarOpciones()
+                return
             }
+            val rol = orden[indice]
+            val nodo = if (rol == "CONDUCTOR") "conductores" else "pasajeros"
+            db.child("usuarios").child(nodo).child(uid).get()
+                .addOnSuccessListener { snap ->
+                    if (snap.exists()) entrar(snap, rol) else probar(indice + 1)
+                }
+                .addOnFailureListener {
+                    // Sin conexion: se muestran las opciones para no dejar la pantalla vacia
+                    mostrarOpciones()
+                }
+        }
+        probar(0)
     }
 
     private fun irAPanel(clase: Class<*>) {

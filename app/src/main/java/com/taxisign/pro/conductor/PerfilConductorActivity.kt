@@ -80,6 +80,7 @@ class PerfilConductorActivity : AppCompatActivity() {
             // Cerrar sesión REAL en Firebase (si no, la cuenta sigue activa y al volver
             // a abrir la app te reingresa automáticamente)
             com.google.firebase.auth.FirebaseAuth.getInstance().signOut()
+            com.taxisign.pro.SessionManager.borrarRol(this)
 
             // Limpiar datos locales de sesión
             val sharedPreferences = getSharedPreferences("TaxiSignPrefs", Context.MODE_PRIVATE)

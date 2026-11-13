@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Marca la vista de contenido a la que ya se le aplicaron los insets del sistema -->
+    <item name="tag_insets_aplicados" type="id" />
+</resources>

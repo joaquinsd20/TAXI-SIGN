@@ -107,15 +107,20 @@ class HistorialViajesPasajeroActivity : AppCompatActivity() {
                                         nombreConductor = nombreConductor,
                                         nombrePasajero = nombrePasajero,
                                         origen = origen,
-                                        tarifa = tarifa
+                                        tarifa = tarifa,
+                                        timestamp = timestamp
                                     )
                                 )
                             }
                         }
+                        // Los mas recientes primero
+                        listaViajes.sortByDescending { it.timestamp }
                         adapter.notifyDataSetChanged()
+                        mostrarEstado()
                     }
 
                     override fun onCancelled(error: DatabaseError) {
+                        mostrarEstado()
                         Toast.makeText(
                             this@HistorialViajesPasajeroActivity,
                             "Error cargando historial: ${error.message}",
@@ -124,7 +129,22 @@ class HistorialViajesPasajeroActivity : AppCompatActivity() {
                     }
                 })
         } else {
+            mostrarEstado()
             Toast.makeText(this, "Inicia sesión para ver tu historial", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /** Oculta la carga y muestra la lista o el estado vacio, con el total de viajes. */
+    private fun mostrarEstado() {
+        findViewById<android.view.View>(R.id.progressHistorial).visibility = android.view.View.GONE
+        val vacio = listaViajes.isEmpty()
+        findViewById<android.view.View>(R.id.layoutSinViajes).visibility =
+            if (vacio) android.view.View.VISIBLE else android.view.View.GONE
+        recycler.visibility = if (vacio) android.view.View.GONE else android.view.View.VISIBLE
+        findViewById<android.widget.TextView>(R.id.tvConteoViajes).text = when (listaViajes.size) {
+            0 -> "Sin viajes todavía"
+            1 -> "1 viaje"
+            else -> "${listaViajes.size} viajes"
         }
     }
 }

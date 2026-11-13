@@ -35,7 +35,7 @@ object PermisoUbicacionHelper {
 
     /** URL de la politica de privacidad (se puede cambiar por la definitiva). */
     const val URL_POLITICA_PRIVACIDAD =
-        "https://joaquinsd20.github.io/TAXI-SIGN/privacy-policy.html"
+        "https://doc-hosting.flycricket.io/taxi-sign-privacy-policy/77d9e988-67b4-47b6-aa76-898267868307/privacy"
 
     private fun prefs(context: Context): SharedPreferences =
         context.applicationContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)

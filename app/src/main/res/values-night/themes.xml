@@ -2,6 +2,10 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.TaxiSign" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
+        <!-- Fondo oscuro detras de la barra de estado y de navegacion (edge-to-edge) -->
+        <item name="android:windowBackground">@color/fondo_app</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
 </resources>

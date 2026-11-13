@@ -99,6 +99,20 @@
                     app:icon="@android:drawable/ic_dialog_email"
                     app:iconTint="#FFD600" />
 
+                <Button
+                    android:id="@+id/btnPoliticaPasajero"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="#1E293B"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="18dp"
+                    android:text="@string/politica_privacidad"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    app:icon="@android:drawable/ic_menu_info_details"
+                    app:iconTint="#FFD600" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

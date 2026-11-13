@@ -17,5 +17,6 @@ data class Viaje(
     val nombreConductor: String = "",
     val nombrePasajero: String = "",
     val origen: String = "",
-    val tarifa: Double = 0.0
+    val tarifa: Double = 0.0,
+    val timestamp: Long = 0L
 )

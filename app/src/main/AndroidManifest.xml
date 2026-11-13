@@ -15,10 +15,14 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <!-- GPS en segundo plano (Android 10+) -->
-    <!-- Solo se solicita tras mostrar el aviso destacado y obtener el
-         consentimiento explicito del usuario (requisito Google Play). -->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <!-- No se usa ACCESS_BACKGROUND_LOCATION: la ubicacion durante el turno y el
+         viaje se comparte con un servicio en primer plano (tipo "location") que
+         se inicia con la app visible, lo cual solo requiere el permiso
+         "mientras se usa la app". tools:node="remove" evita que alguna
+         libreria lo vuelva a agregar al manifest combinado. -->
+    <uses-permission
+        android:name="android.permission.ACCESS_BACKGROUND_LOCATION"
+        tools:node="remove" />
 
     <!-- Servicio en primer plano para el rastreo de la ubicacion en segundo plano -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -34,6 +38,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name=".TaxiSignApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -50,6 +55,7 @@
             android:value="AIzaSyBXZDPoloKmzL9k0tDLBjfQ37hZ2kh87JE" />
 
         <activity
+            android:screenOrientation="portrait"
             android:name="com.taxisign.pro.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -59,78 +65,111 @@
         </activity>
 
         <!-- MAPAS -->
-        <activity android:name="com.taxisign.pro.conductor.MapaConductorActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.MapaPasajeroActivity" android:exported="false" />
 
         <!-- CONDUCTOR -->
-        <activity android:name="com.taxisign.pro.conductor.BuscarPasajero" android:exported="false" />
-        <activity android:name="com.taxisign.pro.conductor.SolicitudDetalleConductor" android:exported="false" />
-        <activity android:name="com.taxisign.pro.conductor.PanelConductorActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.conductor.PerfilConductorActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.conductor.ActivityGanancias" android:exported="false" />
-        <activity android:name="com.taxisign.pro.conductor.DocumentosConductor" android:exported="false" />
-        <activity android:name="com.taxisign.pro.conductor.AjustesConductor" android:exported="false" />
-        <activity android:name="com.taxisign.pro.conductor.ComentariosConductor" android:exported="false" />
-        <activity android:name="com.taxisign.pro.conductor.CalificarPasajero" android:exported="false" />
-        <activity android:name="com.taxisign.pro.conductor.ModificarDatosConductor" android:exported="false" />
-        <activity android:name="com.taxisign.pro.conductor.PasajeroAsignado" android:exported="false" />
-        <activity android:name="com.taxisign.pro.conductor.IrHaciaPasajero" android:exported="false" />
-        <activity android:name="com.taxisign.pro.conductor.DuranteViajeConductor" android:exported="false" />
-        <activity android:name="com.taxisign.pro.conductor.ViajeFinalizadoConductor" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.BuscarPasajero" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.SolicitudDetalleConductor" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.PanelConductorActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.PerfilConductorActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.ActivityGanancias" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.DocumentosConductor" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.AjustesConductor" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.ComentariosConductor" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.CalificarPasajero" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.ModificarDatosConductor" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.PasajeroAsignado" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.IrHaciaPasajero" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.DuranteViajeConductor" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.ViajeFinalizadoConductor" android:exported="false" />
 
         <!-- PASAJERO -->
-        <activity android:name="com.taxisign.pro.pasajero.PanelPasajeroActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.PerfilPasajeroActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.BuscarDestinoActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.ConfirmacionViajeActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.BuscarConductorActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.ConductorAsignadoActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.EsperaConductorActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.DuranteViajePasajeroActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.HistorialViaje" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.ViajeFinalizadoActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.HistorialViajesPasajeroActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.DetalleViajeActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.LugaresActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.SeleccionarCiudadActivity" android:exported="false"/>
-        <activity android:name="com.taxisign.pro.pasajero.QrSeguridadPasajeroActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.conductor.QrSeguridadConductorActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.EditarPerfilPasajeroActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.CalificarConductorActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.pasajero.AjustesPasajeroActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.PanelPasajeroActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.PerfilPasajeroActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.ConfirmacionViajeActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.BuscarConductorActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.ConductorAsignadoActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.EsperaConductorActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.DuranteViajePasajeroActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.ViajeFinalizadoActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.HistorialViajesPasajeroActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.DetalleViajeActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.LugaresActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.SeleccionarCiudadActivity" android:exported="false"/>
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.QrSeguridadPasajeroActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.conductor.QrSeguridadConductorActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.CalificarConductorActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.pasajero.AjustesPasajeroActivity" android:exported="false" />
 
 
         <!-- LOGIN -->
-        <activity android:name="com.taxisign.pro.Login.LoginActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.Login.CrearCuentaPasajero" android:exported="false" />
-        <activity android:name="com.taxisign.pro.Login.CrearCuentaConductor" android:exported="false" />
-        <activity android:name="com.taxisign.pro.Login.CompletarPerfilConductorGoogle" android:exported="false" />
-        <activity android:name="com.taxisign.pro.Login.CompletarPerfilPasajeroGoogle" android:exported="false" />
-        <activity android:name="com.taxisign.pro.Login.ValidarDocumentosConductor" android:exported="false" />
-        <activity android:name="com.taxisign.pro.Login.EsperaAprobacionConductor" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.Login.LoginActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.Login.CrearCuentaPasajero" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.Login.CrearCuentaConductor" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.Login.ValidarDocumentosConductor" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.Login.EsperaAprobacionConductor" android:exported="false" />
 
         <!-- CHAT -->
 
 
         <activity
+            android:screenOrientation="portrait"
             android:name="com.taxisign.pro.ChatPasajeroActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:screenOrientation="portrait"
             android:name="com.taxisign.pro.ChatConductorActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
 
         <!-- OTROS -->
-        <activity android:name="com.taxisign.pro.notificaciones.NotificationsActivity" android:exported="false" />
-        <activity android:name="com.taxisign.pro.Seguridad.SeguridadContraseña" android:exported="false" />
-        <activity android:name="com.taxisign.pro.Seguridad.Soporte" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.notificaciones.NotificationsActivity" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.Seguridad.SeguridadContraseña" android:exported="false" />
+        <activity
+            android:screenOrientation="portrait" android:name="com.taxisign.pro.Seguridad.Soporte" android:exported="false" />
 
         <!-- SERVICIO EN PRIMER PLANO: rastreo de ubicacion durante el viaje.
-             Requiere ACCESS_BACKGROUND_LOCATION, que solo se pide tras el
-             aviso destacado y el consentimiento explicito del usuario. -->
+             Se inicia desde una Activity visible, por lo que solo necesita
+             ACCESS_FINE_LOCATION ("mientras se usa la app"). -->
         <service
             android:name="com.taxisign.pro.Seguridad.LocationForegroundService"
             android:exported="false"

@@ -1,0 +1,263 @@
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+index e1b170b..402551e 100644
+--- a/app/build.gradle.kts
++++ b/app/build.gradle.kts
+@@ -11,7 +11,7 @@ android {
+         applicationId = "com.taxisign.pro"
+         minSdk = 24
+         targetSdk = 36
+-        versionCode = 6
++        versionCode = 7
+         versionName = "1.5"
+         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+     }
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+index d0f74d0..2a9068c 100644
+--- a/app/src/main/AndroidManifest.xml
++++ b/app/src/main/AndroidManifest.xml
+@@ -15,10 +15,14 @@
+     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+ 
+-    <!-- GPS en segundo plano (Android 10+) -->
+-    <!-- Solo se solicita tras mostrar el aviso destacado y obtener el
+-         consentimiento explicito del usuario (requisito Google Play). -->
+-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
++    <!-- No se usa ACCESS_BACKGROUND_LOCATION: la ubicacion durante el turno y el
++         viaje se comparte con un servicio en primer plano (tipo "location") que
++         se inicia con la app visible, lo cual solo requiere el permiso
++         "mientras se usa la app". tools:node="remove" evita que alguna
++         libreria lo vuelva a agregar al manifest combinado. -->
++    <uses-permission
++        android:name="android.permission.ACCESS_BACKGROUND_LOCATION"
++        tools:node="remove" />
+ 
+     <!-- Servicio en primer plano para el rastreo de la ubicacion en segundo plano -->
+     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+@@ -129,8 +133,8 @@
+         <activity android:name="com.taxisign.pro.Seguridad.Soporte" android:exported="false" />
+ 
+         <!-- SERVICIO EN PRIMER PLANO: rastreo de ubicacion durante el viaje.
+-             Requiere ACCESS_BACKGROUND_LOCATION, que solo se pide tras el
+-             aviso destacado y el consentimiento explicito del usuario. -->
++             Se inicia desde una Activity visible, por lo que solo necesita
++             ACCESS_FINE_LOCATION ("mientras se usa la app"). -->
+         <service
+             android:name="com.taxisign.pro.Seguridad.LocationForegroundService"
+             android:exported="false"
+diff --git a/app/src/main/java/com/taxisign/pro/Seguridad/LocationForegroundService.kt b/app/src/main/java/com/taxisign/pro/Seguridad/LocationForegroundService.kt
+index 09f742b..05292b8 100644
+--- a/app/src/main/java/com/taxisign/pro/Seguridad/LocationForegroundService.kt
++++ b/app/src/main/java/com/taxisign/pro/Seguridad/LocationForegroundService.kt
+@@ -219,16 +219,9 @@ class LocationForegroundService : Service() {
+             Manifest.permission.ACCESS_FINE_LOCATION
+         ) == PackageManager.PERMISSION_GRANTED
+ 
+-        val permisoFondo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+-            ContextCompat.checkSelfPermission(
+-                this,
+-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+-            ) == PackageManager.PERMISSION_GRANTED
+-        } else {
+-            true
+-        }
+-
+-        return permisoFino && permisoFondo
++        // Un servicio en primer plano tipo "location" iniciado con la app visible
++        // solo necesita el permiso "mientras se usa la app".
++        return permisoFino
+     }
+ 
+     private fun detener() {
+diff --git a/app/src/main/java/com/taxisign/pro/Seguridad/PermisoUbicacionFondoManager.kt b/app/src/main/java/com/taxisign/pro/Seguridad/PermisoUbicacionFondoManager.kt
+index 67885d2..e428de9 100644
+--- a/app/src/main/java/com/taxisign/pro/Seguridad/PermisoUbicacionFondoManager.kt
++++ b/app/src/main/java/com/taxisign/pro/Seguridad/PermisoUbicacionFondoManager.kt
+@@ -2,7 +2,6 @@ package com.taxisign.pro.Seguridad
+ 
+ import android.Manifest
+ import android.content.pm.PackageManager
+-import android.os.Build
+ import androidx.activity.result.contract.ActivityResultContracts
+ import androidx.appcompat.app.AppCompatActivity
+ import androidx.core.content.ContextCompat
+@@ -10,20 +9,13 @@ import androidx.core.content.ContextCompat
+ /**
+  * PermisoUbicacionFondoManager
+  *
+- * Orquesta la solicitud del permiso de ubicacion en segundo plano respetando
+- * el orden que exige Android 11+ (API 30):
+- *
+- *   1. Aviso destacado + consentimiento expreso (requisito de Google Play).
++ * Flujo de permisos de ubicacion del conductor:
++ *   1. Aviso de uso de la ubicacion + consentimiento.
+  *   2. ACCESS_FINE_LOCATION (permiso "mientras se usa la app").
+- *   3. ACCESS_BACKGROUND_LOCATION ("permitir todo el tiempo") en una
+- *      segunda solicitud independiente, solo si el usuario acepto el aviso.
+- *
+- * En Android 10 y anteriores el sistema muestra la opcion "Permitir todo el
+- * tiempo" dentro del dialogo de ACCESS_FINE_LOCATION, por lo que no hay una
+- * solicitud separada.
+  *
+- * Uso (en la Activity, como campo para registrar el launcher a tiempo):
+- *   private val permisoFondo = PermisoUbicacionFondoManager(this) { concedido -> ... }
++ * No se solicita ACCESS_BACKGROUND_LOCATION: la ubicacion se sigue
++ * compartiendo con la pantalla bloqueada gracias a LocationForegroundService,
++ * que se inicia con la app visible y muestra una notificacion permanente.
+  */
+ class PermisoUbicacionFondoManager(
+     private val activity: AppCompatActivity,
+@@ -32,23 +24,13 @@ class PermisoUbicacionFondoManager(
+ 
+     private var finalizado = false
+ 
+-    private val launcherFondo = activity.registerForActivityResult(
+-        ActivityResultContracts.RequestPermission()
+-    ) { _ ->
+-        entregar(tienePermisoFondo())
+-    }
+-
+     private val launcherFino = activity.registerForActivityResult(
+         ActivityResultContracts.RequestPermission()
+     ) { concedido ->
+-        if (concedido) {
+-            pedirFondo()
+-        } else {
+-            entregar(false)
+-        }
++        entregar(concedido)
+     }
+ 
+-    /** Inicia el flujo: aviso destacado -> permiso fino -> permiso en segundo plano. */
++    /** Inicia el flujo: aviso de uso de ubicacion -> permiso "mientras se usa la app". */
+     fun iniciar() {
+         if (!PermisoUbicacionHelper.tieneConsentimiento(activity)) {
+             PermisoUbicacionHelper.mostrarAvisoDestacado(activity) { aceptado ->
+@@ -64,32 +46,10 @@ class PermisoUbicacionFondoManager(
+     }
+ 
+     private fun continuar() {
+-        if (tienePermisoFondo()) {
+-            entregar(true)
+-            return
+-        }
+-
+         if (tienePermisoFino()) {
+-            pedirFondo()
+-        } else {
+-            launcherFino.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+-        }
+-    }
+-
+-    private fun pedirFondo() {
+-        if (tienePermisoFondo()) {
+             entregar(true)
+-            return
+-        }
+-
+-        // En Android 11+ el permiso de segundo plano se concede aparte.
+-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+-            launcherFondo.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+         } else {
+-            // Android 10 o anterior: el "permitir todo el tiempo" venia en el
+-            // dialogo del permiso fino, que ya se mostro. Si no se concedio,
+-            // no hay nada mas que pedir.
+-            entregar(false)
++            launcherFino.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+         }
+     }
+ 
+@@ -99,13 +59,12 @@ class PermisoUbicacionFondoManager(
+             Manifest.permission.ACCESS_FINE_LOCATION
+         ) == PackageManager.PERMISSION_GRANTED
+ 
+-    fun tienePermisoFondo(): Boolean {
+-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) return false
+-        return ContextCompat.checkSelfPermission(
+-            activity,
+-            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+-        ) == PackageManager.PERMISSION_GRANTED
+-    }
++    /**
++     * Se mantiene por compatibilidad con AjustesConductor. Ya no se pide
++     * ACCESS_BACKGROUND_LOCATION: el servicio en primer plano funciona con el
++     * permiso "mientras se usa la app".
++     */
++    fun tienePermisoFondo(): Boolean = tienePermisoFino()
+ 
+     private fun entregar(concedido: Boolean) {
+         if (finalizado) return
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+index 4d40fe1..0485620 100644
+--- a/app/src/main/res/values/strings.xml
++++ b/app/src/main/res/values/strings.xml
+@@ -96,21 +96,21 @@
+ 
+     <!-- Aviso destacado de ubicacion en segundo plano (requisito Play Console) -->
+     <string name="aviso_ubicacion_fondo_icono_desc">Icono de ubicacion en segundo plano</string>
+-    <string name="aviso_ubicacion_fondo_titulo">Ubicación en segundo plano</string>
+-    <string name="aviso_ubicacion_fondo_subtitulo">AVISO DESTACADO ANTES DE ACTIVAR EL PERMISO</string>
+-    <string name="aviso_ubicacion_fondo_intro">TaxiSign necesita tu permiso de ubicación en segundo plano. Antes de activarlo, te explicamos con claridad qué recopilamos y por qué.</string>
++    <string name="aviso_ubicacion_fondo_titulo">Uso de tu ubicación</string>
++    <string name="aviso_ubicacion_fondo_subtitulo">ANTES DE ACTIVAR EL PERMISO DE UBICACIÓN</string>
++    <string name="aviso_ubicacion_fondo_intro">TaxiSign necesita tu permiso de ubicación mientras usas la app. Antes de activarlo, te explicamos con claridad qué recopilamos y por qué.</string>
+ 
+     <string name="aviso_ubicacion_fondo_que">QUÉ RECOPILAMOS</string>
+     <string name="aviso_ubicacion_fondo_que_detalle">Las coordenadas GPS de tu dispositivo (latitud y longitud) mientras conduces. No recopilamos tu historial de ubicaciones fuera de tus turnos, ni datos de contactos, mensajes, fotos ni ubicación de tu vivienda.</string>
+ 
+     <string name="aviso_ubicacion_fondo_por_que">POR QUÉ LA NECESITAMOS</string>
+-    <string name="aviso_ubicacion_fondo_por_que_detalle">Para que el pasajero pueda ver en el mapa dónde estás en tiempo real mientras dura el viaje, incluso si bloqueas la pantalla o sales de la aplicación. Sin este permiso el pasajero vería un taxi detenido y no podríaeguírtelo ni contactarte con precisión.</string>
++    <string name="aviso_ubicacion_fondo_por_que_detalle">Para que el pasajero pueda ver en el mapa dónde estás en tiempo real mientras dura el viaje, incluso si bloqueas la pantalla o sales de la aplicación. Sin este permiso el pasajero vería un taxi detenido y no podría seguirte ni contactarte con precisión.</string>
+ 
+     <string name="aviso_ubicacion_fondo_como">CÓMO LA USAMOS</string>
+     <string name="aviso_ubicacion_fondo_como_detalle">Solo durante tu turno y tus viajes. Se activa cuando te conectas como conductor y se desactiva automáticamente al finalizar el viaje. Verás una notificación permanente mientras esté activo para que siempre sepas que se está compartiendo tu ubicación.</string>
+ 
+     <string name="aviso_ubicacion_fondo_controls">TUS CONTROLES</string>
+-    <string name="aviso_ubicacion_fondo_controls_detalle">Puedes desactivar este permiso en cualquier momento desde Configuración → Ubicación en segundo plano, o desde los ajustes de tu teléfono. Si lo rechazas, la app sigue funcionando con normalidad y simplemente no se compartirá tu ubicación en segundo plano.</string>
++    <string name="aviso_ubicacion_fondo_controls_detalle">Puedes desactivar este permiso en cualquier momento desde Configuración o desde los ajustes de tu teléfono. Al desconectarte o finalizar el viaje se deja de compartir tu ubicación.</string>
+ 
+     <string name="aviso_ubicacion_fondo_politica">Lee nuestra Política de privacidad</string>
+     <string name="aviso_ubicacion_fondo_aceptar">Aceptar y continuar</string>
+@@ -123,8 +123,8 @@
+     <string name="fgs_ubicacion_canal">Ubicación de viaje</string>
+ 
+     <!-- Ajustes: ubicacion en segundo plano -->
+-    <string name="ajustes_ubicacion_fondo_titulo">Ubicación en segundo plano</string>
+-    <string name="ajustes_ubicacion_fondo_descripcion">Compartir tu ubicación durante los viajes aunque la app esté en segundo plano</string>
++    <string name="ajustes_ubicacion_fondo_titulo">Compartir ubicación en viajes</string>
++    <string name="ajustes_ubicacion_fondo_descripcion">Compartir tu ubicación con el pasajero durante tus turnos y viajes</string>
+     <string name="ajustes_ubicacion_fondo_activado">Permiso activado y aceptado por ti</string>
+     <string name="ajustes_ubicacion_fondo_pendiente">Aún no has aceptado el aviso destacado</string>
+     <string name="ajustes_ubicacion_fondo_denegado">Aceptaste el aviso, pero denegaste el permiso del sistema</string>
+diff --git a/docs/privacy-policy.html b/docs/privacy-policy.html
+index e3d2de4..619c007 100644
+--- a/docs/privacy-policy.html
++++ b/docs/privacy-policy.html
+@@ -121,17 +121,18 @@
+       y el tiempo estimado hasta tu destino y permitirte elegir el punto de recojo.
+     </p>
+     <p>
+-      <strong>Ubicación en segundo plano (conductores):</strong> para que el pasajero pueda ver
+-      en tiempo real dónde se encuentra el taxi durante el viaje, la App puede solicitar el permiso
+-      de <em>ubicación en segundo plano</em>. Antes de activarlo, la App muestra un
+-      <strong>aviso destacado</strong> que explica qué se recopila, por qué, cómo se usa y cómo
+-      revocarlo, y requiere tu <strong>consentimiento explícito</strong>.
++      <strong>Ubicación durante el turno y el viaje (conductores):</strong> para que el pasajero
++      pueda ver en tiempo real dónde se encuentra el taxi, la App comparte la ubicación del
++      conductor mientras está conectado o en un viaje. Para ello usa el permiso de ubicación
++      <em>mientras se usa la App</em> y un servicio en primer plano que muestra una
++      <strong>notificación permanente</strong> todo el tiempo que la ubicación se está compartiendo,
++      incluso si la pantalla está bloqueada. La App <strong>no solicita</strong> el permiso de
++      ubicación en segundo plano ("permitir todo el tiempo").
+     </p>
+     <p>
+-      El consentimiento es <strong>totalmente opcional</strong>: si lo rechazas, la App sigue
+-      funcionando con normalidad y simplemente no se compartirá tu ubicación cuando esté en
+-      segundo plano. Puedes revocarlo en cualquier momento desde
+-      <em>Configuración → Ubicación en segundo plano</em> y desde los ajustes de tu dispositivo.
++      Al desconectarte o finalizar el viaje se deja de compartir tu ubicación. Puedes retirar el
++      permiso en cualquier momento desde <em>Configuración</em> en la App o desde los ajustes de tu
++      dispositivo.
+     </p>
+     <p>
+       <strong>No recopilamos historial de ubicaciones</strong> fuera de tus turnos y viajes activos,

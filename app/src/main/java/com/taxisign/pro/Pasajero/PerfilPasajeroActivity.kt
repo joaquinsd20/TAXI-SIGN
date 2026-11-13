@@ -36,6 +36,7 @@ class PerfilPasajeroActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
                 uriFotoPerfil = it
+                prepararFotoReal()
                 ivPerfil.setImageURI(it)
             }
         }
@@ -56,7 +57,7 @@ class PerfilPasajeroActivity : AppCompatActivity() {
         val etCorreo = findViewById<EditText>(R.id.et_correo)
         val etTelefono = findViewById<EditText>(R.id.et_telefono)
         val etDni = findViewById<EditText>(R.id.et_dni)
-        val etTipoDiscapacidad = findViewById<EditText>(R.id.et_tipo_discapacidad)
+        val rgAccesibilidad = findViewById<android.widget.RadioGroup>(R.id.rgAccesibilidadPerfil)
 
         val mAuth = FirebaseAuth.getInstance()
         val mDatabase = FirebaseDatabase.getInstance().reference
@@ -91,7 +92,7 @@ class PerfilPasajeroActivity : AppCompatActivity() {
                         etCorreo.setText(correo)
                         etTelefono.setText(telefono)
                         etDni.setText(dni)
-                        etTipoDiscapacidad.setText(tipoDiscapacidad)
+                        marcarAccesibilidad(rgAccesibilidad, tipoDiscapacidad)
 
                         fotoBase64Actual = fotoPerfil
                         mostrarFotoBase64(fotoPerfil)
@@ -119,37 +120,36 @@ class PerfilPasajeroActivity : AppCompatActivity() {
             val correo = etCorreo.text.toString().trim()
             val telefono = etTelefono.text.toString().trim()
             val dni = etDni.text.toString().trim()
-            val tipoDiscapacidad = etTipoDiscapacidad.text.toString().trim()
-
-            if (
-                nombre.isEmpty() ||
-                correo.isEmpty() ||
-                telefono.isEmpty() ||
-                dni.isEmpty() ||
-                tipoDiscapacidad.isEmpty()
-            ) {
-                vibrarBreve()
-                Toast.makeText(this, "Completa toda la información", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            // Mismos valores que en el registro: Sordo, Mudo, Sordomudo o Normal
+            val tipoDiscapacidad = when (rgAccesibilidad.checkedRadioButtonId) {
+                R.id.rbPerfilSordo -> "Sordo"
+                R.id.rbPerfilMudo -> "Mudo"
+                R.id.rbPerfilSordomudo -> "Sordomudo"
+                R.id.rbPerfilNormal -> "Normal"
+                else -> ""
             }
 
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
+            // Se puede guardar con campos vacios; solo se revisa lo que si se escribio
+            if (correo.isNotEmpty() && !android.util.Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
                 vibrarBreve()
                 Toast.makeText(this, "Correo inválido", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            if (telefono.length < 9) {
+            if (telefono.isNotEmpty() && telefono.filter { it.isDigit() }.length < 9) {
                 vibrarBreve()
                 Toast.makeText(this, "Número de teléfono inválido", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            if (dni.length != 8) {
+            if (dni.isNotEmpty() && dni.length != 8) {
                 vibrarBreve()
-                Toast.makeText(this, "DNI inválido", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "El DNI debe tener 8 dígitos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            val faltanCampos = nombre.isEmpty() || correo.isEmpty() || telefono.isEmpty() ||
+                dni.isEmpty() || tipoDiscapacidad.isEmpty()
 
             vibrarBreve()
 
@@ -164,17 +164,20 @@ class PerfilPasajeroActivity : AppCompatActivity() {
                     tipoDiscapacidad.contains("sordo", ignoreCase = true) ||
                             tipoDiscapacidad.contains("mudo", ignoreCase = true)
 
+                // Solo se envian los campos con dato, para no borrar lo que ya estaba guardado
                 val datos = hashMapOf<String, Any>(
                     "uid" to uid,
-                    "nombre" to nombre,
-                    "email" to correo,
-                    "telefono" to telefono,
-                    "dni" to dni,
-                    "tipoDiscapacidad" to tipoDiscapacidad,
-                    "esSordoMudo" to esSordoMudo,
-                    "fotoPerfil" to nuevaFotoBase64,
                     "tipoUsuario" to "PASAJERO"
                 )
+                if (nombre.isNotEmpty()) datos["nombre"] = nombre
+                if (correo.isNotEmpty()) datos["email"] = correo
+                if (telefono.isNotEmpty()) datos["telefono"] = telefono
+                if (dni.isNotEmpty()) datos["dni"] = dni
+                if (tipoDiscapacidad.isNotEmpty()) {
+                    datos["tipoDiscapacidad"] = tipoDiscapacidad
+                    datos["esSordoMudo"] = esSordoMudo
+                }
+                if (nuevaFotoBase64.isNotEmpty()) datos["fotoPerfil"] = nuevaFotoBase64
 
                 btnGuardar.isEnabled = false
 
@@ -183,18 +186,22 @@ class PerfilPasajeroActivity : AppCompatActivity() {
                     .child(uid)
                     .updateChildren(datos)
                     .addOnSuccessListener {
-                        SessionManager.nombreUsuario = nombre
-                        SessionManager.correoUsuario = correo
-                        SessionManager.telefonoUsuario = telefono
-                        SessionManager.dniUsuario = dni
+                        if (nombre.isNotEmpty()) SessionManager.nombreUsuario = nombre
+                        if (correo.isNotEmpty()) SessionManager.correoUsuario = correo
+                        if (telefono.isNotEmpty()) SessionManager.telefonoUsuario = telefono
+                        if (dni.isNotEmpty()) SessionManager.dniUsuario = dni
+                        SessionManager.guardarRol(this, "PASAJERO")
 
                         Toast.makeText(
                             this,
-                            "Perfil actualizado correctamente",
-                            Toast.LENGTH_SHORT
+                            if (faltanCampos) "Cambios guardados. No olvides completar los demás campos."
+                            else "Perfil actualizado correctamente",
+                            Toast.LENGTH_LONG
                         ).show()
 
+                        // Vuelve al panel existente (recreado para mostrar el nombre nuevo)
                         val intent = Intent(this, PanelPasajeroActivity::class.java)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
                         finish()
                     }
@@ -245,7 +252,7 @@ class PerfilPasajeroActivity : AppCompatActivity() {
                         val cal = c.child("calificacion").getValue(Int::class.java) ?: continue
                         suma += cal; n++
                     }
-                    tv.text = if (n == 0) "⭐ Sin calificaciones todavía"
+                    tv.text = if (n == 0) "⭐ Sin calificaciones"
                         else "⭐ %.1f  (%d viaje%s)".format(suma.toDouble() / n, n, if (n == 1) "" else "s")
                 }
                 override fun onCancelled(error: com.google.firebase.database.DatabaseError) {}
@@ -263,8 +270,31 @@ class PerfilPasajeroActivity : AppCompatActivity() {
             val bytes = Base64.decode(limpio, Base64.DEFAULT)
             val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
 
-            ivPerfil.setImageBitmap(bitmap)
+            if (bitmap != null) {
+                prepararFotoReal()
+                ivPerfil.setImageBitmap(bitmap)
+            }
         } catch (_: Exception) {}
+    }
+
+    /** Quita el relleno y el color del icono por defecto para mostrar la foto completa. */
+    /** Marca la opcion de accesibilidad guardada (acepta textos antiguos escritos a mano). */
+    private fun marcarAccesibilidad(grupo: android.widget.RadioGroup, valor: String) {
+        val v = valor.lowercase()
+        val id = when {
+            "sordomudo" in v || ("sordo" in v && "mudo" in v) -> R.id.rbPerfilSordomudo
+            "sordo" in v || "audit" in v -> R.id.rbPerfilSordo
+            "mudo" in v || "habla" in v -> R.id.rbPerfilMudo
+            "normal" in v || "ningun" in v || "sin " in v -> R.id.rbPerfilNormal
+            else -> -1
+        }
+        if (id != -1) grupo.check(id) else grupo.clearCheck()
+    }
+
+    private fun prepararFotoReal() {
+        ivPerfil.imageTintList = null
+        ivPerfil.setPadding(0, 0, 0, 0)
+        ivPerfil.scaleType = android.widget.ImageView.ScaleType.CENTER_CROP
     }
 
     private fun vibrarBreve() {

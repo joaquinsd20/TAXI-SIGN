@@ -34,3 +34,6 @@ local.properties
 # --- Archivos locales temporales ---
 paldo-local
 *.log
+
+# --- Archivos de trabajo personales (no son parte de la app) ---
+Claude outputs/

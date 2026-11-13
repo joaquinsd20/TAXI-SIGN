@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,11 +19,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.taxisign.pro.notificaciones.NotificationsActivity
 import com.taxisign.pro.R
 import com.taxisign.pro.SessionManager
-import com.taxisign.pro.Login.LoginActivity
 import com.taxisign.pro.mapa.MapaBaseFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.RectangularBounds
@@ -108,15 +105,10 @@ class PanelPasajeroActivity : AppCompatActivity() {
             irLogin()
             return
         }
+        // Recuerda que esta sesion es de pasajero (por ejemplo, despues de registrarse)
+        if (SessionManager.rolGuardado(this).isEmpty()) SessionManager.guardarRol(this, "PASAJERO")
 
-        if (!Places.isInitialized()) {
-            Places.initialize(
-                applicationContext,
-                "AIzaSyBXZDPoloKmzL9k0tDLBjfQ37hZ2kh87JE"
-            )
-        }
-
-        placesClient = Places.createClient(this)
+        placesClient = com.taxisign.pro.PlacesHelper.cliente(this)
 
         recyclerResultados.layoutManager = LinearLayoutManager(this)
         adapter = DireccionAdapter(listaDirecciones) { direccion ->
@@ -280,7 +272,7 @@ class PanelPasajeroActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { snapshot ->
                 if (!snapshot.exists()) {
-                    txtUsuario.text = "¡Hola, Usuario!"
+                    txtUsuario.text = "Pasajero"
                     return@addOnSuccessListener
                 }
 
@@ -297,10 +289,11 @@ class PanelPasajeroActivity : AppCompatActivity() {
                 val tipoDiscapacidad =
                     snapshot.child("tipoDiscapacidad").value?.toString() ?: ""
 
-                txtUsuario.text = "¡Hola, $nombre!"
+                txtUsuario.text = primerNombre(nombre)
 
                 SessionManager.nombreUsuario = nombre
                 SessionManager.correoUsuario = correo
+                SessionManager.guardarRol(this@PanelPasajeroActivity, "PASAJERO") // guarda nombre y correo actualizados
                 SessionManager.telefonoUsuario = telefono
                 SessionManager.dniUsuario = dni
                 SessionManager.tipoDiscapacidadUsuario = tipoDiscapacidad
@@ -323,7 +316,7 @@ class PanelPasajeroActivity : AppCompatActivity() {
                 }
             }
             .addOnFailureListener {
-                txtUsuario.text = "¡Hola, ${SessionManager.nombreUsuario}!"
+                txtUsuario.text = primerNombre(SessionManager.nombreUsuario)
             }
     }
 
@@ -409,68 +402,65 @@ class PanelPasajeroActivity : AppCompatActivity() {
         etBusqueda.clearFocus()
     }
 
+    /**
+     * Nombre corto para el saludo: primer nombre y primer apellido, completos
+     * (sin cortar con "..."). "Daniel Joaquín Sánchez Delgado" -> "Daniel Sánchez".
+     */
+    private fun primerNombre(nombreCompleto: String): String {
+        val partes = nombreCompleto.trim().split(Regex("\\s+")).filter { it.isNotBlank() }
+        return when {
+            partes.isEmpty() -> "Pasajero"
+            partes.size <= 2 -> partes.joinToString(" ")
+            // 3 palabras: nombre + apellido; 4 o mas: primer nombre + primer apellido
+            partes.size == 3 -> "${partes[0]} ${partes[1]}"
+            else -> "${partes[0]} ${partes[partes.size - 2]}"
+        }
+    }
+
+    /** Menu del boton de 3 rayas: hoja inferior con encabezado del usuario y opciones con iconos. */
     private fun mostrarMenuUsuario() {
-        val popup = PopupMenu(this, btnMenu)
+        val dialogo = com.google.android.material.bottomsheet.BottomSheetDialog(this)
+        val vista = layoutInflater.inflate(R.layout.bottom_sheet_menu_pasajero, null)
+        dialogo.setContentView(vista)
 
-        popup.menu.add("Mi perfil")
-        popup.menu.add("Mis viajes")
-        popup.menu.add("Mis lugares")
-        popup.menu.add("Cambiar ciudad")
-        popup.menu.add("Notificaciones")
-        popup.menu.add("Configuración")
-        popup.menu.add("Seguridad y contraseña")
-        popup.menu.add("Cerrar sesión")
-
-        popup.setOnMenuItemClickListener { item ->
-            when (item.title.toString()) {
-                "Mi perfil" -> {
-                    startActivity(Intent(this, PerfilPasajeroActivity::class.java))
-                    true
-                }
-
-                "Mis viajes" -> {
-                    startActivity(Intent(this, HistorialViajesPasajeroActivity::class.java))
-                    true
-                }
-
-                "Mis lugares" -> {
-                    lugaresLauncher.launch(Intent(this, LugaresActivity::class.java))
-                    true
-                }
-
-                "Cambiar ciudad" -> {
-                    cambiarCiudadLauncher.launch(
-                        Intent(this, SeleccionarCiudadActivity::class.java)
-                            .putExtra("ES_CAMBIO", true)
-                    )
-                    true
-                }
-
-                "Notificaciones" -> {
-                    startActivity(Intent(this, NotificationsActivity::class.java))
-                    true
-                }
-
-                "Configuración" -> {
-                    startActivity(Intent(this, AjustesPasajeroActivity::class.java))
-                    true
-                }
-
-                "Seguridad y contraseña" -> {
-                    startActivity(Intent(this, com.taxisign.pro.Seguridad.SeguridadContraseña::class.java))
-                    true
-                }
-
-                "Cerrar sesión" -> {
-                    cerrarSesion()
-                    true
-                }
-
-                else -> false
-            }
+        val nombre = SessionManager.nombreUsuario.trim().ifEmpty { "Pasajero" }
+        vista.findViewById<TextView>(R.id.tvMenuNombre).text = nombre
+        vista.findViewById<TextView>(R.id.tvMenuInicial).text = nombre.first().uppercaseChar().toString()
+        val correo = SessionManager.correoUsuario.ifEmpty { auth.currentUser?.email ?: "" }
+        vista.findViewById<TextView>(R.id.tvMenuCorreo).apply {
+            text = correo
+            visibility = if (correo.isBlank()) View.GONE else View.VISIBLE
         }
 
-        popup.show()
+        fun opcion(id: Int, accion: () -> Unit) {
+            vista.findViewById<View>(id).setOnClickListener {
+                dialogo.dismiss()
+                accion()
+            }
+        }
+        opcion(R.id.opcionPerfil) { startActivity(Intent(this, PerfilPasajeroActivity::class.java)) }
+        opcion(R.id.opcionViajes) { startActivity(Intent(this, HistorialViajesPasajeroActivity::class.java)) }
+        opcion(R.id.opcionLugares) { lugaresLauncher.launch(Intent(this, LugaresActivity::class.java)) }
+        opcion(R.id.opcionCiudad) {
+            cambiarCiudadLauncher.launch(
+                Intent(this, SeleccionarCiudadActivity::class.java).putExtra("ES_CAMBIO", true)
+            )
+        }
+        opcion(R.id.opcionNotificaciones) { startActivity(Intent(this, NotificationsActivity::class.java)) }
+        opcion(R.id.opcionConfiguracion) { startActivity(Intent(this, AjustesPasajeroActivity::class.java)) }
+        opcion(R.id.opcionSeguridad) {
+            startActivity(Intent(this, com.taxisign.pro.Seguridad.SeguridadContraseña::class.java))
+        }
+        opcion(R.id.opcionCerrarSesion) { cerrarSesion() }
+
+        dialogo.setOnShowListener {
+            // Fondo transparente para que se vean las esquinas redondeadas de la hoja
+            dialogo.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                ?.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+            dialogo.behavior.state = com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+            dialogo.behavior.skipCollapsed = true
+        }
+        dialogo.show()
     }
 
     private fun cerrarSesion() {
@@ -479,6 +469,7 @@ class PanelPasajeroActivity : AppCompatActivity() {
         notiListener = null
 
         auth.signOut()
+        SessionManager.borrarRol(this)
 
         SessionManager.idUsuario = 0
         SessionManager.nombreUsuario = ""
@@ -492,7 +483,7 @@ class PanelPasajeroActivity : AppCompatActivity() {
     }
 
     private fun irLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, com.taxisign.pro.MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
@@ -603,6 +594,10 @@ class PanelPasajeroActivity : AppCompatActivity() {
     }
 
     private fun buscarDirecciones(query: String) {
+        if (!com.taxisign.pro.PlacesHelper.placesDisponible) {
+            buscarDireccionesGratis(query)
+            return
+        }
         val token = AutocompleteSessionToken.newInstance()
 
         val request = FindAutocompletePredictionsRequest.builder()
@@ -632,13 +627,36 @@ class PanelPasajeroActivity : AppCompatActivity() {
                 recyclerResultados.visibility =
                     if (listaDirecciones.isNotEmpty()) View.VISIBLE else View.GONE
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Error buscando direcciones: revisa tu conexión y la API de Places en la consola de Google", Toast.LENGTH_LONG).show()
+            .addOnFailureListener { error ->
+                com.taxisign.pro.PlacesHelper.mensajeError(error) // deja el detalle en Logcat
+                if (com.taxisign.pro.PlacesHelper.esRechazoDeServicio(error)) {
+                    com.taxisign.pro.PlacesHelper.placesDisponible = false
+                }
+                buscarDireccionesGratis(query)
             }
+    }
+
+    /** Busqueda gratuita (OpenStreetMap + Geocoder) cuando Google Places no responde. */
+    private fun buscarDireccionesGratis(query: String) {
+        BusquedaLugaresGratis.buscar(this, query, bondsCiudadActual()) { resultados ->
+            // Ignora respuestas viejas si el usuario siguio escribiendo
+            if (etBusqueda.text.toString().trim() != query) return@buscar
+            listaDirecciones.clear()
+            listaDirecciones.addAll(resultados)
+            adapter.notifyDataSetChanged()
+            recyclerResultados.visibility = if (resultados.isNotEmpty()) View.VISIBLE else View.GONE
+            if (resultados.isEmpty() && query.length >= 4) {
+                Toast.makeText(this, "No encontramos ese lugar. Prueba con la calle y el número.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     /** Usa la Place de Google para obtener las coordenadas exactas, con respaldo del Geocoder. */
     private fun obtenerCoordenadasDireccion(direccion: Direccion) {
+        if (direccion.latitud != 0.0 || direccion.longitud != 0.0) {
+            confirmarDestino(direccion.nombre, direccion.latitud, direccion.longitud)
+            return
+        }
         if (direccion.placeId.isNotBlank()) {
             val request = FetchPlaceRequest.newInstance(
                 direccion.placeId,

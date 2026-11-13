@@ -1,6 +1,14 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.services)
+}
+
+// Credenciales de firma leidas de local.properties (no se sube a GitHub).
+val localProps = Properties().apply {
+    val archivo = rootProject.file("local.properties")
+    if (archivo.exists()) archivo.inputStream().use { load(it) }
 }
 
 android {
@@ -11,16 +19,16 @@ android {
         applicationId = "com.taxisign.pro"
         minSdk = 24
         targetSdk = 36
-        versionCode = 6
-        versionName = "1.5"
+        versionCode = 8
+        versionName = "1.7"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
         create("release") {
-            storeFile = file("release/taxisign-key.jks") // Asegúrate que el archivo esté en esta ruta
-            storePassword = "taxisign-key-2026"
-            keyAlias = "key0"
-            keyPassword = "aplicacionesmoviles2026-1"
+            storeFile = file(localProps.getProperty("RELEASE_STORE_FILE", "release/taxisign-key.jks"))
+            storePassword = localProps.getProperty("RELEASE_STORE_PASSWORD")
+            keyAlias = localProps.getProperty("RELEASE_KEY_ALIAS", "key0")
+            keyPassword = localProps.getProperty("RELEASE_KEY_PASSWORD")
         }
     }
     buildTypes {

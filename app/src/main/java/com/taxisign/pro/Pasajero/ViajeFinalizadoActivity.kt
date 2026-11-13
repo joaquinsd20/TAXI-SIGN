@@ -61,10 +61,10 @@ class ViajeFinalizadoActivity : AppCompatActivity() {
         // Mostrar información (inicial desde extras)
         txtConductor.text = conductor
         txtDestino.text = destino
-        txtTiempo.text = "⏱ Tiempo total: $tiempo"
-        txtDistancia.text = "📍 Distancia recorrida: $distancia"
-        txtTarifa.text = "💵 S/ %.2f".format(tarifa)
-        txtMetodoPago.text = "Pago: $metodoPago"
+        txtTiempo.text = tiempo
+        txtDistancia.text = distancia
+        txtTarifa.text = "S/ %.2f".format(tarifa)
+        txtMetodoPago.text = "💵 $metodoPago"
 
         // Cargar datos confiables desde Firebase (viaje + solicitud)
         val viajeId = intent.getStringExtra("VIAJE_ID") ?: ""
@@ -111,16 +111,16 @@ class ViajeFinalizadoActivity : AppCompatActivity() {
 
             val tarifaFb = v.child("tarifa").getValue(Double::class.java)
                 ?: v.child("precio").getValue(Double::class.java)
-            if (tarifaFb != null && tarifaFb > 0) txtTarifa.text = "💵 S/ %.2f".format(tarifaFb)
+            if (tarifaFb != null && tarifaFb > 0) txtTarifa.text = "S/ %.2f".format(tarifaFb)
 
             var dist = v.child("distancia").value?.toString()
             var tiem = v.child("tiempo").value?.toString()
             var pago = v.child("metodoPago").value?.toString()
 
             fun pintar() {
-                if (!dist.isNullOrEmpty()) txtDistancia.text = "📍 Distancia recorrida: $dist"
-                if (!tiem.isNullOrEmpty()) txtTiempo.text = "⏱ Tiempo total: $tiem"
-                if (!pago.isNullOrEmpty()) txtMetodoPago.text = "Pago: $pago"
+                if (!dist.isNullOrEmpty()) txtDistancia.text = dist
+                if (!tiem.isNullOrEmpty()) txtTiempo.text = tiem
+                if (!pago.isNullOrEmpty()) txtMetodoPago.text = "💵 $pago"
             }
             pintar()
 

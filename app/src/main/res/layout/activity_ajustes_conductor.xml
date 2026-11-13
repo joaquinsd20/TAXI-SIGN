@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@drawable/bg_taxi_neon">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -46,8 +52,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:minHeight="70dp"
                 android:paddingHorizontal="20dp"
+                android:paddingVertical="14dp"
                 android:gravity="center_vertical">
 
                 <LinearLayout
@@ -74,6 +82,7 @@
                     android:id="@+id/switchAutoAccept"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     app:thumbTint="#FFD600"
                     app:trackTint="#B8C1D9"/>
             </LinearLayout>
@@ -127,41 +136,34 @@
 
             <Button
                 android:id="@+id/btnCambiarPass"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="Seguridad y Contraseña"
-                android:backgroundTint="#151B31"
-                android:textColor="#FFFFFF"
-                android:gravity="start|center_vertical"
-                app:icon="@android:drawable/ic_lock_lock"
-                app:iconTint="#FFD600"
-                android:paddingStart="20dp"/>
+                style="@style/TaxiSign.AjustesFila"
+                android:text="Seguridad y contraseña"
+                app:icon="@android:drawable/ic_lock_lock" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#252D47" android:layout_marginHorizontal="20dp"/>
             <Button
                 android:id="@+id/btnSoporteConductor"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
+                style="@style/TaxiSign.AjustesFila"
                 android:text="Contactar soporte"
-                android:backgroundTint="#151B31"
-                android:textColor="#FFFFFF"
-                android:gravity="start|center_vertical"
-                app:icon="@android:drawable/ic_dialog_email"
-                app:iconTint="#FFD600"
-                android:paddingStart="20dp"/>
-
+                app:icon="@android:drawable/ic_dialog_email" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#252D47" android:layout_marginHorizontal="20dp"/>
             <Button
-                android:id="@+id/btnEliminarCuentaConductor"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="Eliminar cuenta"
-                android:backgroundTint="#3A1E1E"
-                android:textColor="#FF5252"
-                android:gravity="start|center_vertical"
-                app:icon="@android:drawable/ic_menu_delete"
-                app:iconTint="#FF5252"
-                android:paddingStart="20dp"/>
+                android:id="@+id/btnPoliticaConductor"
+                style="@style/TaxiSign.AjustesFila"
+                android:text="@string/politica_privacidad"
+                app:icon="@android:drawable/ic_menu_info_details" />
+
 
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <Button
+        android:id="@+id/btnEliminarCuentaConductor"
+        style="@style/TaxiSign.AjustesFila.Peligro"
+        android:layout_marginTop="20dp"
+        android:text="Eliminar cuenta"
+        app:icon="@android:drawable/ic_menu_delete" />
+
 </LinearLayout>
+
+</ScrollView>

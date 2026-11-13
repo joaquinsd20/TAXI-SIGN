@@ -1,96 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    android:background="@drawable/bg_borde"
+    android:layout_marginBottom="14dp"
+    android:background="@drawable/bg_card_viaje"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical"
     android:padding="18dp">
 
-    <!-- DESTINO -->
-
-    <TextView
-        android:id="@+id/txt_destino"
-        android:layout_width="wrap_content"
+    <!-- Fecha y estado -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Universidad Nacional de Trujillo"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-    <!-- FECHA -->
+        <TextView
+            android:id="@+id/txt_fecha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="17/05/2026 20:30"
+            android:textColor="#9AA3B8"
+            android:textSize="13sp" />
 
-    <TextView
-        android:id="@+id/txt_fecha"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/txt_estado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_estado_pill"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:text="Completado"
+            android:textColor="#4ADE80"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Ruta: origen -> destino -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="17/05/2026 - 8:30 PM"
-        android:textColor="#AAB1CB"
-        android:textSize="14sp"/>
+        android:layout_marginTop="14dp"
+        android:orientation="horizontal">
 
-    <!-- DIVISION -->
+        <LinearLayout
+            android:layout_width="16dp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp">
+
+            <View
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:background="@drawable/bg_punto_origen" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:layout_marginVertical="3dp"
+                android:layout_weight="1"
+                android:background="#2C3753" />
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_location_pin"
+                app:tint="#FFD600" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_origen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tu ubicación"
+                android:textColor="#C7CDDC"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_destino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Universidad Nacional de Trujillo"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="14dp"
-        android:background="#1E293B"/>
+        android:background="#1F2A44" />
 
-    <!-- FOOTER -->
-
+    <!-- Conductor, tarifa y detalle -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="12dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <!-- ESTADO -->
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/bg_circle_green"/>
-
-            <TextView
-                android:id="@+id/txt_estado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Completado"
-                android:textColor="#4CAF50"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
-
-        </LinearLayout>
-
-        <!-- ESPACIO -->
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
-
-        <!-- BOTON -->
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_person"
+            app:tint="#9AA3B8" />
 
         <TextView
-            android:id="@+id/btn_detalle"
+            android:id="@+id/txt_conductor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="Conductor"
+            android:textColor="#C7CDDC"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txt_tarifa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="VER DETALLE"
+            android:layout_marginStart="8dp"
+            android:text="S/ 12.00"
             android:textColor="#FFD600"
-            android:textSize="14sp"
-            android:textStyle="bold"/>
-
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/btn_detalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="end"
+        android:minHeight="32dp"
+        android:text="Ver detalle  ›"
+        android:textColor="#FFD600"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 </LinearLayout>

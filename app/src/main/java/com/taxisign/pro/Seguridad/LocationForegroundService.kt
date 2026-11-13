@@ -219,16 +219,9 @@ class LocationForegroundService : Service() {
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 
-        val permisoFondo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
-
-        return permisoFino && permisoFondo
+        // Un servicio en primer plano tipo "location" iniciado con la app visible
+        // solo necesita el permiso "mientras se usa la app".
+        return permisoFino
     }
 
     private fun detener() {

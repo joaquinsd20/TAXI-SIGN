@@ -57,10 +57,11 @@ class PasajeroAsignado : AppCompatActivity() {
         val imgPasajero = findViewById<ImageView>(R.id.img_conductor)
 
         tvNombre.text = nombrePasajero
-        tvTipo.text = if (esSordoMudo) "Usuario SordoMudo" else "Usuario"
+        tvTipo.text = if (esSordoMudo) "🤟 Se comunica por texto" else "Pasajero"
         tvRecojo.text = direccionRecojo
-        tvPrecio.text = "Tarifa: S/ %.2f".format(tarifa)
-        tvDistancia.text = "Distancia: $distancia"
+        tvPrecio.text = "S/ %.2f".format(tarifa)
+        tvDistancia.text = distancia
+        findViewById<TextView>(R.id.tv_direccion_destino_pasajero).text = direccionDestino
         imgPasajero.setImageResource(R.drawable.ic_person)
 
         btnIrARecojo.setOnClickListener {

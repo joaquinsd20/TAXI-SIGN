@@ -60,6 +60,13 @@ class LoginActivity : AppCompatActivity() {
 
         rolActual = intent.getStringExtra("ROL_SELECCIONADO") ?: "PASAJERO"
 
+        // Se entra al login para iniciar sesion con el rol elegido: si quedo una
+        // sesion anterior (de otro rol o incompleta), se cierra para no mezclar cuentas.
+        if (auth.currentUser != null) {
+            auth.signOut()
+            SessionManager.borrarRol(this)
+        }
+
         // El client ID tipo "Web" se genera automáticamente desde
         // google-services.json como R.string.default_web_client_id,
         // siempre que exista un cliente OAuth tipo "Web application"
@@ -332,7 +339,7 @@ class LoginActivity : AppCompatActivity() {
         SessionManager.idUsuario = uid.hashCode()
         SessionManager.nombreUsuario = nombre
         SessionManager.correoUsuario = correo
-        SessionManager.rolUsuario = rol
+        SessionManager.guardarRol(this, rol)
 
         // Guardar el PROVEEDOR real de autenticación (google.com o password)
         val proveedor = auth.currentUser?.providerData

@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.taxisign.pro.Login.LoginActivity
 import com.taxisign.pro.R
 import com.taxisign.pro.SessionManager
 import com.taxisign.pro.Seguridad.SeguridadContraseña
@@ -34,6 +33,10 @@ class AjustesPasajeroActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btnSoportePasajero).setOnClickListener {
             abrirSoporte()
+        }
+
+        findViewById<Button>(R.id.btnPoliticaPasajero).setOnClickListener {
+            com.taxisign.pro.Seguridad.PoliticaPrivacidad.abrir(this)
         }
 
         findViewById<Button>(R.id.btnEliminarCuentaPasajero).setOnClickListener {
@@ -127,11 +130,12 @@ class AjustesPasajeroActivity : AppCompatActivity() {
         SessionManager.telefonoUsuario = ""
         SessionManager.dniUsuario = ""
         SessionManager.tipoDiscapacidadUsuario = ""
-        SessionManager.rolUsuario = ""
+        SessionManager.borrarRol(this)
     }
 
+    /** Vuelve a la pantalla de inicio para elegir de nuevo Pasajero o Conductor. */
     private fun irLogin() {
-        val intent = Intent(this, LoginActivity::class.java).apply {
+        val intent = Intent(this, com.taxisign.pro.MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)

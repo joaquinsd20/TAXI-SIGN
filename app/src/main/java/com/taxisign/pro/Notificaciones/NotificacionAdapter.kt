@@ -19,8 +19,6 @@ class NotificacionAdapter(
         val indicador: View = v.findViewById(R.id.unreadIndicator)
         val titulo: TextView = v.findViewById(R.id.tvNotificationTitle)
         val mensaje: TextView = v.findViewById(R.id.tvNotificationMessage)
-        val detalles: View = v.findViewById(R.id.detailsContainer)
-        val botones: View = v.findViewById(R.id.actionButtonsContainer)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -36,10 +34,23 @@ class NotificacionAdapter(
         holder.mensaje.text = n.mensaje
         holder.hora.text = tiempoRelativo(n.timestamp)
         holder.indicador.visibility = if (n.leida) View.GONE else View.VISIBLE
-        // Estos bloques son opcionales en cada aviso; los ocultamos por defecto
-        holder.detalles.visibility = View.GONE
-        holder.botones.visibility = View.GONE
+        holder.mensaje.visibility = if (n.mensaje.isBlank()) View.GONE else View.VISIBLE
         holder.icono.setImageResource(iconoTipo(n.tipo))
+
+        // Color por tipo de aviso (icono y etiqueta) y fondo resaltado si no se ha leido
+        val color = android.graphics.Color.parseColor(colorTipo(n.tipo))
+        holder.icono.imageTintList = android.content.res.ColorStateList.valueOf(color)
+        holder.tipo.setTextColor(color)
+        holder.itemView.setBackgroundResource(
+            if (n.leida) R.drawable.bg_card_viaje else R.drawable.bg_card_noti_nueva
+        )
+    }
+
+    private fun colorTipo(tipo: String) = when (tipo) {
+        "SEGURIDAD" -> "#F87171"
+        "LLEGADA" -> "#4ADE80"
+        "GANANCIA" -> "#60A5FA"
+        else -> "#FFD600"
     }
 
     override fun getItemCount() = lista.size
@@ -53,9 +64,10 @@ class NotificacionAdapter(
     }
 
     private fun iconoTipo(tipo: String) = when (tipo) {
-        "SEGURIDAD" -> android.R.drawable.ic_dialog_alert
-        "LLEGADA" -> android.R.drawable.ic_menu_mylocation
-        "GANANCIA" -> android.R.drawable.ic_menu_save
+        "SEGURIDAD" -> R.drawable.ic_warning
+        "LLEGADA" -> R.drawable.ic_location_pin
+        "VIAJE" -> R.drawable.ic_taxi
+        "GANANCIA" -> R.drawable.ic_star
         else -> R.drawable.ic_notifications
     }
 
